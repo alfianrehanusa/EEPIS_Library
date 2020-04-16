@@ -6,12 +6,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Dashboard</h1>
+                <h1 class="m-0 text-dark">User Mahasiswa</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    <li class="breadcrumb-item active">User</li>
+                    <li class="breadcrumb-item active">Mahasiswa</li>
                 </ol>
             </div>
         </div>
@@ -20,7 +21,7 @@
 
 <div class="content ml-3 mr-3">
     <div class="container-fluid p-3 shadow-sm mb-5 bg-white rounded">
-        <h3 class="text-center">Selamat Datang Di Perpustakaan PENS</h3>
+        <h3 class="text-center">User Mahasiswa</h3>
     </div>
 </div>
 
