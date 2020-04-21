@@ -35,12 +35,12 @@
                                 <p>Dosen</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="/user/pustakawan" class="nav-link {{ (request()->is('user/pustakawan')) ? 'active' : '' }}">
                                 <i class="far fa-user nav-icon"></i>
                                 <p>Pustakawan</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
             </ul>

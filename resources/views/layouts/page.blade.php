@@ -57,6 +57,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <!-- Sweet Alert 2-->
     <script src="{{ asset('js/sweetalert2@9.js') }}"></script>
+    <!-- Bootbox -->
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
     <script>
         $.ajaxSetup({
             headers: {

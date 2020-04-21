@@ -41,7 +41,7 @@
                             <td>{{$key->nama}}</td>
                             <td>{{$key->email}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-user-edit mr-1"></i>Ubah</button>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="editMahasiswa({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button>
                                 <button type="button" class="btn btn-sm btn-danger" onclick="hapusMahasiswa({{$key->id}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
@@ -144,41 +144,95 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 confirmButtonText: '<i class="fa fa-trash"> Ya, hapus data',
-                cancelButtonText: '<i class="fa fa-times"> Batal',
-                showLoaderOnConfirm: true,
-                preConfirm: () => {
+                cancelButtonText: '<i class="fa fa-times"> Batal'
+            }).then((result) => {
+                if(result.value){
+                    var formdata = new FormData();
+                    formdata.append('id', id);
                     $.ajax({
-                        type:'POST',
+                        type: 'POST',
                         dataType: 'json',
                         url: '/user/mahasiswa/delete',
-                        data:{id: id},
+                        data: formdata,
                         contentType: false,
                         cache: false,
-                        processData: false
-                    })
-                    .then(response => {
-                        return response.json();
-                    })
-                },
-                allowOutsideClick: () => !Swal.isLoading()
-            }).then((result) => {
-                if (result.value.status === 'success') {
-                    Swal.fire(
-                        'Blocked!',
-                        data.reason,
-                        'success'
-                    )
-                    table.ajax.reload( null, false);
-                }
-                else{
-                    Swal.fire(
-                        'Oops...',
-                        data.reason,
-                        'error'
-                    )
+                        processData: false,
+                        success:function(data){
+                            if(data.status === 'success'){
+                                Swal.fire(
+                                    'Sukses!',
+                                    data.reason,
+                                    'success'
+                                ).then(() => {
+                                    location.reload(true);
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Oops...',
+                                    data.reason,
+                                    'error'
+                                )
+                            }
+                        }
+                    });
                 }
             });
         }
 
+        function editMahasiswa(id){
+            var dialog = bootbox.dialog({
+                title: 'Perubahan Data Mahasiswa',
+                message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
+            }).find(".modal-dialog").addClass("modal-dialog-centered");
+            $.post("/user/mahasiswa/read", {id: id}, function(data, status){
+                var message = '<form id="edit_mahasiswa"><input type="hidden" name="nrp_asal" value="' + data.id + '">';
+                message += '<div class="form-group"><label for="edit_nrp" class="font-weight-normal">NRP :</label><input readonly type="text" class="form-control" placeholder="NRP" id="edit_nrp" name="edit_nrp" autocomplete="off" value="' + data.id + '" required></div>';
+                message += '<div class="form-group"><label for="edit_nama" class="font-weight-normal">Nama Lengkap :</label><input type="text" class="form-control" placeholder="Nama Lengkap" id="edit_nama" name="edit_nama" autocomplete="off" value="' + data.nama + '" required></div>';
+                message += '<div class="form-group"><label for="edit_email" class="font-weight-normal">Alamat Email :</label><input type="email" class="form-control" placeholder="Alamat Email" id="edit_email" name="edit_email" autocomplete="off" value="' + data.email + '" required></div>';
+                message += '<div class="form-group"><label for="edit_password" class="font-weight-normal">Password :</label><input type="password" class="form-control" placeholder="Password" id="edit_password" name="edit_password" autocomplete="off"><small class="form-text text-muted">Kosongkan jika tidak ingin merubah password</small></div>';
+                message += '<div class="text-right"><button id="ubah_mahasiswa_btn_loading" class="btn btn-success disabled" style="display: none;">Loading...</button><button id="ubah_mahasiswa_btn_submit" type="submit" class="btn btn-success"><i class="far fa-floppy-o mr-1"></i>Simpan</button></div></form>'
+                dialog.init(function(){
+                    dialog.find('.bootbox-body').html(message);
+                });
+                $(document).ready(function(){
+                    $("#edit_mahasiswa").submit(function(event){
+                        event.preventDefault();
+                        $('#ubahResellerButtonLoading').show();
+                        $('#ubahResellerButtonSubmit').hide();
+                        $('.bootbox-close-button').hide();
+                        var formData = new FormData(this);
+                        $.ajax({
+                            type:'POST',
+                            dataType: 'json',
+                            url: '/user/mahasiswa/edit',
+                            data:formData,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success:function(data){
+                                $('#ubahResellerButtonLoading').hide();
+                                $('#ubahResellerButtonSubmit').show();
+                                $('.bootbox-close-button').show();
+                                if(data.status === 'success'){
+                                    Swal.fire(
+                                        'Sukses!',
+                                        data.reason,
+                                        'success'
+                                    ).then(() => {
+                                        location.reload(true);
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Oops...',
+                                        data.reason,
+                                        'error'
+                                    )
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+        }
     </script>
 @endpush
