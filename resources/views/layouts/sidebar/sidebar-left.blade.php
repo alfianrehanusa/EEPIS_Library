@@ -4,7 +4,6 @@
         <span class="brand-text font-weight-light">Perpustakaan <b>PENS</b></span>
     </a>
 
-
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -42,6 +41,12 @@
                             </a>
                         </li> --}}
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/pengaturan" class="nav-link {{ (request()->is('pengaturan')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>Pengaturan</p>
+                    </a>
                 </li>
             </ul>
         </nav>
