@@ -13,6 +13,47 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item has-treeview {{ (request()->is('buku/*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('buku/*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Buku
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/buku/umum" class="nav-link {{ (request()->is('buku/umum')) ? 'active' : '' }}">
+                                <i class="fa fa-book-reader nav-icon"></i>
+                                <p>Umum</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/buku/ebook" class="nav-link {{ (request()->is('buku/ebook')) ? 'active' : '' }}">
+                                <i class="fa fa-book-open nav-icon"></i>
+                                <p>Ebook</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/buku/jurnal" class="nav-link {{ (request()->is('buku/jurnal')) ? 'active' : '' }}">
+                                <i class="fa fa-journal-whills nav-icon"></i>
+                                <p>Jurnal</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/buku/majalah" class="nav-link {{ (request()->is('buku/majalah')) ? 'active' : '' }}">
+                                <i class="fa fa-atlas nav-icon"></i>
+                                <p>Majalah</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/buku/pa_ta" class="nav-link {{ (request()->is('buku/pa_ta')) ? 'active' : '' }}">
+                                <i class="fa fa-journal-whills nav-icon"></i>
+                                <p>Proyek Akhir/Tugas Akhir</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item has-treeview {{ (request()->is('user/*')) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (request()->is('user/*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
@@ -24,13 +65,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/user/mahasiswa" class="nav-link {{ (request()->is('user/mahasiswa')) ? 'active' : '' }}">
-                                <i class="far fa-user nav-icon"></i>
+                                <i class="fa fa-user nav-icon"></i>
                                 <p>Mahasiswa</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/dosen" class="nav-link {{ (request()->is('user/dosen')) ? 'active' : '' }}">
-                                <i class="far fa-user nav-icon"></i>
+                                <i class="fa fa-user nav-icon"></i>
                                 <p>Dosen</p>
                             </a>
                         </li>
