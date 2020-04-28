@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     //BUKU
     //Umum
     Route::get('buku/umum', 'Buku\UmumController@index');
+    Route::get('buku/umum/detail/{id}', 'Buku\UmumController@detail');
     Route::post('buku/umum/read', 'Buku\UmumController@read');
     Route::post('buku/umum/add', 'Buku\UmumController@add');
     Route::post('buku/umum/edit', 'Buku\UmumController@edit');
@@ -67,6 +68,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user/pustakawan/edit', 'User\PustakawanController@edit');
     Route::post('user/pustakawan/delete', 'User\PustakawanController@delete');
 
+    //GET FILE
+    //Cover Buku
+    Route::get('file/cover_buku/{filename}', 'FileController@index');
 });
 
 Route::get('/', function () {

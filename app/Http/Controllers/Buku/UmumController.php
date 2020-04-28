@@ -18,6 +18,14 @@ class UmumController extends Controller{
         return view('page.buku.umum', compact('data'));
     }
 
+    function detail($id){
+        $data = Buku::find($id);
+        if(!$data){
+            abort(404);
+        }
+        return view('page.buku.umum_detail', compact('data'));
+    }
+
     function read(Request $request){
         $data = Buku::find($request->input('id'));
         return response()->json($data);
@@ -29,7 +37,7 @@ class UmumController extends Controller{
             $gambar = $request->file('gambar');
             $gambar_name = uniqid() . '.' . $gambar->getClientOriginalExtension();
             Storage::disk('local')->putFileAs(
-                'public',
+                'cover_buku',
                 $gambar,
                 $gambar_name
             );
@@ -76,9 +84,18 @@ class UmumController extends Controller{
     function delete(Request $request){
         try{
             DB::beginTransaction();
+
+            //delete picture
+            if(Buku::find($request->input('id'))){
+                $filename = Buku::find($request->input('id'));
+                unlink(storage_path('app/cover_buku/' . $filename->gambar));
+            }
+
+            //delete data
             if(!Buku::find($request->input('id'))->delete()){
                 throw 'Kesalahan sistem!';
             }
+
             DB::commit();
             return response()->json(array('status' => 'success', 'reason' => 'Sukses hapus data'));
         }catch(Exception $e){

@@ -23,7 +23,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/buku/umum" class="nav-link {{ (request()->is('buku/umum')) ? 'active' : '' }}">
+                            <a href="/buku/umum" class="nav-link {{ (request()->is('buku/umum') || request()->is('buku/umum/detail/*')) ? 'active' : '' }}">
                                 <i class="fa fa-book-reader nav-icon"></i>
                                 <p>Umum</p>
                             </a>
