@@ -28,12 +28,12 @@
                                 <p>Umum</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="/buku/ebook" class="nav-link {{ (request()->is('buku/ebook')) ? 'active' : '' }}">
                                 <i class="fa fa-book-open nav-icon"></i>
                                 <p>Ebook</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="/buku/jurnal" class="nav-link {{ (request()->is('buku/jurnal')) ? 'active' : '' }}">
                                 <i class="fa fa-journal-whills nav-icon"></i>

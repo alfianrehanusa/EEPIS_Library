@@ -25,24 +25,28 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('buku/umum/delete', 'Buku\UmumController@delete');
     //Ebook
     Route::get('buku/ebook', 'Buku\EbookController@index');
+    Route::get('buku/ebook/detail/{id}', 'Buku\EbookController@detail');
     Route::post('buku/ebook/read', 'Buku\EbookController@read');
     Route::post('buku/ebook/add', 'Buku\EbookController@add');
     Route::post('buku/ebook/edit', 'Buku\EbookController@edit');
     Route::post('buku/ebook/delete', 'Buku\EbookController@delete');
     //Jurnal
     Route::get('buku/jurnal', 'Buku\JurnalController@index');
+    Route::get('buku/jurnal/detail/{id}', 'Buku\JurnalController@detail');
     Route::post('buku/jurnal/read', 'Buku\JurnalController@read');
     Route::post('buku/jurnal/add', 'Buku\JurnalController@add');
     Route::post('buku/jurnal/edit', 'Buku\JurnalController@edit');
     Route::post('buku/jurnal/delete', 'Buku\JurnalController@delete');
     //Majalah
     Route::get('buku/majalah', 'Buku\MajalahController@index');
+    Route::get('buku/majalah/detail/{id}', 'Buku\MajalahController@detail');
     Route::post('buku/majalah/read', 'Buku\MajalahController@read');
     Route::post('buku/majalah/add', 'Buku\MajalahController@add');
     Route::post('buku/majalah/edit', 'Buku\MajalahController@edit');
     Route::post('buku/majalah/delete', 'Buku\MajalahController@delete');
     //Proyek Akhir/Tugas Akhir
     Route::get('buku/pa_ta', 'Buku\PaTaController@index');
+    Route::get('buku/pa_ta/detail/{id}', 'Buku\PaTaController@detail');
     Route::post('buku/pa_ta/read', 'Buku\PaTaController@read');
     Route::post('buku/pa_ta/add', 'Buku\PaTaController@add');
     Route::post('buku/pa_ta/edit', 'Buku\PaTaController@edit');
