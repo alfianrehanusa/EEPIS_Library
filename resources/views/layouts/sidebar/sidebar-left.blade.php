@@ -24,7 +24,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/buku/umum" class="nav-link {{ (request()->is('buku/umum') || request()->is('buku/umum/detail/*')) ? 'active' : '' }}">
-                                <i class="fa fa-book-reader nav-icon"></i>
+                                <i class="fa fa-book-open nav-icon"></i>
                                 <p>Umum</p>
                             </a>
                         </li>
@@ -53,6 +53,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/peminjaman" class="nav-link {{ (request()->is('peminjaman')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book-reader"></i>
+                        <p>Peminjaman</p>
+                    </a>
                 </li>
                 <li class="nav-item has-treeview {{ (request()->is('user/*')) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (request()->is('user/*')) ? 'active' : '' }}">

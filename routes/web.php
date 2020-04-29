@@ -52,6 +52,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('buku/pa_ta/edit', 'Buku\PaTaController@edit');
     Route::post('buku/pa_ta/delete', 'Buku\PaTaController@delete');
 
+    //PEMINJAMAN
+    //Peminjaman
+    Route::get('peminjaman', 'PeminjamanController@index');
+
     //USER
     //Mahasiswa
     Route::get('user/mahasiswa', 'User\MahasiswaController@index');
