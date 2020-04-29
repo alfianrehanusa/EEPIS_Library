@@ -9,11 +9,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <p class="nav-link mb-0">{{Auth::user()->name}}</p>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
-                    class="fas fa-user"></i></a>
+                    class="fas fa-user"></i><span class="ml-2">{{Auth::user()->name}}</span></a>
         </li>
     </ul>
 </nav>

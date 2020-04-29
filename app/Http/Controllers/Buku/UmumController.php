@@ -62,17 +62,44 @@ class UmumController extends Controller{
 
     function edit(Request $request){
         try{
-            if($request->input('edit_nip') != $request->input('nip_asal') && Buku::find($request->input('edit_nip'))){
-                return response()->json(array('status' => 'failed', 'reason' => 'NIP sudah ada!'));
+
+            //Save new image if exist
+            if ($request->hasFile('edit_gambar')) {
+                $gambar = $request->file('edit_gambar');
+                $gambar_name = uniqid() . '.' . $gambar->getClientOriginalExtension();
+                Storage::disk('local')->putFileAs(
+                    'cover_buku',
+                    $gambar,
+                    $gambar_name
+                );
+
+                //delete old image
+                $data = Buku::find($request->input('id_asal'));
+                if($data){
+                    unlink(storage_path('app/cover_buku/' . $data->gambar));
+                }          
+
+                //save new image name and detail book
+                $data->judul = $request->input('edit_judul');
+                $data->pengarang = $request->input('edit_pengarang');
+                $data->sinopsis = $request->input('edit_sinopsis');
+                $data->tahun = $request->input('edit_tahun');
+                $data->jumlah = $request->input('edit_jumlah');
+                $data->gambar = $gambar_name;
+                $data->save();
+
             }
-            $data = Buku::find($request->input('nip_asal'));
-            $data->id = $request->input('edit_nip');
-            $data->nama = $request->input('edit_nama');
-            $data->email = $request->input('edit_email');
-            if($request->input('edit_password')){
-                $data->password = md5($request->input('edit_password'));
+            else{
+                //Save detail book
+                $data = Buku::find($request->input('id_asal'));
+                $data->judul = $request->input('edit_judul');
+                $data->pengarang = $request->input('edit_pengarang');
+                $data->sinopsis = $request->input('edit_sinopsis');
+                $data->tahun = $request->input('edit_tahun');
+                $data->jumlah = $request->input('edit_jumlah');
+                $data->save();
             }
-            $data->save();
+
             DB::commit();
             return response()->json(array('status' => 'success', 'reason' => 'Sukses edit data.'));
         }catch(Exception $e){
@@ -85,7 +112,7 @@ class UmumController extends Controller{
         try{
             DB::beginTransaction();
 
-            //delete picture
+            //delete image
             if(Buku::find($request->input('id'))){
                 $filename = Buku::find($request->input('id'));
                 unlink(storage_path('app/cover_buku/' . $filename->gambar));
