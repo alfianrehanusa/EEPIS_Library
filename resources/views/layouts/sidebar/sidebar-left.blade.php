@@ -54,11 +54,30 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="/peminjaman" class="nav-link {{ (request()->is('peminjaman')) ? 'active' : '' }}">
+                <li class="nav-item has-treeview {{ (request()->is('peminjaman/*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('peminjaman/*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book-reader"></i>
-                        <p>Peminjaman</p>
+                        <p>
+                            Peminjaman
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/peminjaman/pesan" class="nav-link {{ (request()->is('peminjaman/pesan')) ? 'active' : '' }}">
+                                <i class="fa fa-user-friends nav-icon"></i>
+                                <p>Daftar Pemesanan</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/peminjaman/pinjam" class="nav-link {{ (request()->is('peminjaman/pinjam')) ? 'active' : '' }}">
+                                <i class="fa fa-user-friends nav-icon"></i>
+                                <p>Daftar Peminjaman</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item has-treeview {{ (request()->is('user/*')) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ (request()->is('user/*')) ? 'active' : '' }}">
