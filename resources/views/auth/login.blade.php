@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="hold-transition login-page" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; background-image: url('{{ asset('image/library_login2.jpg')}}')">
+<body class="hold-transition login-page" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; background-image: url('{{ asset('image/library_login.jpg')}}')">
     <div class="login-box">
         <div class="login-logo bg-white rounded-top mb-0">
             <a href="/">Perpustakaan <b>PENS</b></a>
