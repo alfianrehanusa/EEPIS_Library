@@ -55,6 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
     //PEMINJAMAN
     //Daftar Pemesanan
     Route::get('peminjaman/pesan', 'Peminjaman\PesanController@index');
+    Route::post('peminjaman/pesan/pinjam', 'Peminjaman\PesanController@pinjam');
     //Daftar Peminjaman
     Route::get('peminjaman/pinjam', 'Peminjaman\PinjamController@index');
 
