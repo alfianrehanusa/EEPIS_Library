@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
 </head>
 
 <body class="hold-transition login-page" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; background-image: url('{{ asset('image/library_login.jpg')}}')">

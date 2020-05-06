@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Peminjaman;
 use App\Models\Pengaturan;
+use App\Models\Buku;
 use DB;
 use Exception;
 
@@ -32,9 +33,20 @@ class PesanController extends Controller{
         try{
             DB::beginTransaction();
 
+            //ubah status menjadi dipinjam
             $data = Peminjaman::find($request->input('id'));
+            $id_buku = $data->id_buku;
             $data->tgl_pinjam = date('Y-m-d');
             $data->status = '3';
+            $data->save();
+
+            //pengurangan jumlah buku
+            $data = Buku::where('id', '=', $id_buku)
+                ->where('jumlah', '>', 0)->first();
+            if(!$data){
+                return response()->json(array('status' => 'failed', 'reason' => 'Stok buku kosong!'));
+            }
+            $data->jumlah = $data->jumlah - 1;
             $data->save();
 
             DB::commit();
