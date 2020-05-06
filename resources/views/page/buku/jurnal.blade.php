@@ -41,7 +41,7 @@
                             <td>{{$key->id}}</td>
                             <td>{{$key->judul}}</td>
                             <td>{{$key->jumlah}}</td>
-                            <td>11111</td>
+                            <td>{{$key->jumlah_dipinjam}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info" onclick="location.href='/buku/jurnal/detail/{{$key->id}}';"><i class="fa fa-eye mr-1"></i>Detail</button>
                                 <button type="button" class="btn btn-sm btn-warning" onclick="editBuku({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button>

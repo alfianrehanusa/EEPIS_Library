@@ -12,14 +12,19 @@ use Storage;
 class JurnalController extends Controller{
 
     function index(){
-        $data = Buku::where('type_buku', '=', 'jurnal')
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = buku.id AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('type_buku', '=', 'jurnal')
             ->orderBy('created_at', 'DESC')
             ->get();
         return view('page.buku.jurnal', compact('data'));
     }
 
     function detail($id){
-        $data = Buku::find($id);
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = " . $id . " AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('buku.id', '=', $id)
+            ->first();
         if(!$data){
             abort(404);
         }
