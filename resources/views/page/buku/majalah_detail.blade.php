@@ -80,6 +80,17 @@
                     </div>
                 </div>
                 <div class="row row-no-gutters">
+                    <div class="col-3">
+                        <h6 class="font-weight-bold">Jumlah Buku Dipinjam</h6>
+                    </div>
+                    <div class="col-1 text-right pl-0 pr-0">
+                        <h6>:</h6>
+                    </div>
+                    <div class="col">
+                        <h6>{{$data->jumlah_dipinjam}}</h6>
+                    </div>
+                </div>
+                <div class="row row-no-gutters">
                     <div class="col-3"></div>
                     <div class="col-1 text-right pl-0 pr-0"></div>
                     <div class="col">

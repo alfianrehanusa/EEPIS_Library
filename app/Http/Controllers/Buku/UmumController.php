@@ -12,14 +12,19 @@ use Storage;
 class UmumController extends Controller{
 
     function index(){
-        $data = Buku::where('type_buku', '=', 'umum')
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = buku.id AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('type_buku', '=', 'umum')
             ->orderBy('created_at', 'DESC')
             ->get();
         return view('page.buku.umum', compact('data'));
     }
 
     function detail($id){
-        $data = Buku::find($id);
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = " . $id . " AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('buku.id', '=', $id)
+            ->first();
         if(!$data){
             abort(404);
         }
@@ -77,7 +82,7 @@ class UmumController extends Controller{
                 $data = Buku::find($request->input('id_asal'));
                 if($data){
                     unlink(storage_path('app/cover_buku/' . $data->gambar));
-                }          
+                }
 
                 //save new image name and detail book
                 $data->judul = $request->input('edit_judul');

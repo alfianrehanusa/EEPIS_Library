@@ -12,14 +12,19 @@ use Storage;
 class PaTaController extends Controller{
 
     function index(){
-        $data = Buku::where('type_buku', '=', 'pa_ta')
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = buku.id AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('type_buku', '=', 'pa_ta')
             ->orderBy('created_at', 'DESC')
             ->get();
         return view('page.buku.pa_ta', compact('data'));
     }
 
     function detail($id){
-        $data = Buku::find($id);
+        $data = DB::table('buku')
+            ->selectRaw("*, (select count(*) from peminjaman where id_buku = " . $id . " AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
+            ->where('buku.id', '=', $id)
+            ->first();
         if(!$data){
             abort(404);
         }
