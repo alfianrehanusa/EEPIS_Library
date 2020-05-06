@@ -11,7 +11,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Buku</li>
+                    <li class="breadcrumb-item">Buku</li>
                     <li class="breadcrumb-item active">Umum</li>
                 </ol>
             </div>
@@ -217,7 +217,7 @@
                 message += '<div class="form-group"><label for="edit_judul" class="font-weight-normal">Judul Buku :</label><input type="text" class="form-control" placeholder="Judul Buku" id="edit_judul" name="edit_judul" autocomplete="off" value="' + data.judul + '" required></div>';
                 message += '<div class="form-group"><label for="edit_pengarang" class="font-weight-normal">Pengarang :</label><input type="text" class="form-control" placeholder="Pengarang" id="edit_pengarang" name="edit_pengarang" autocomplete="off" value="' + data.pengarang + '" required></div>';
                 message += '<div class="form-group"><label for="edit_sinopsis" class="font-weight-normal">Sinopsis Buku :</label><textarea rows="5" class="form-control" placeholder="Sinopsis Buku" id="edit_sinopsis" name="edit_sinopsis" autocomplete="off" required>' + data.sinopsis + '</textarea></div>';
-                
+
                 message += '<div class="row">';
                 message += '<div class="col"><div class="form-group"><label for="edit_tahun" class="font-weight-normal">Tahun Terbit :</label><input type="text" class="form-control" placeholder="Tahun Terbit" id="edit_tahun" name="edit_tahun" autocomplete="off" value="' + data.tahun + '" required></div></div>';
                 message += '<div class="col"><div class="form-group"><label for="edit_jumlah" class="font-weight-normal">Jumlah/Stok Buku :</label><input type="text" class="form-control" placeholder="Jumlah Stok/Buku" id="edit_jumlah" name="edit_jumlah" autocomplete="off" value="' + data.jumlah + '" required></div></div>';
@@ -228,7 +228,7 @@
                 message += '<div class="text-right"><button id="ubah_buku_btn_loading" class="btn btn-success disabled" style="display: none;">Loading...</button><button id="ubah_buku_btn_submit" type="submit" class="btn btn-success"><i class="far fa-floppy-o mr-1"></i>Simpan</button></div></form>';
                 dialog.init(function(){
                     dialog.find('.bootbox-body').html(message);
-                    
+
                     // Add the following code if you want the name of the file appear on select
                     $(".custom-file-input").on("change", function() {
                         var fileName = $(this).val().split("\\").pop();

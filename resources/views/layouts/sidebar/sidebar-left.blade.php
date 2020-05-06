@@ -24,7 +24,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/buku/umum" class="nav-link {{ (request()->is('buku/umum') || request()->is('buku/umum/detail/*')) ? 'active' : '' }}">
-                                <i class="fa fa-book-reader nav-icon"></i>
+                                <i class="fa fa-book-open nav-icon"></i>
                                 <p>Umum</p>
                             </a>
                         </li>
@@ -50,6 +50,31 @@
                             <a href="/buku/pa_ta" class="nav-link {{ (request()->is('buku/pa_ta')) ? 'active' : '' }}">
                                 <i class="fa fa-journal-whills nav-icon"></i>
                                 <p>Proyek Akhir/Tugas Akhir</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview {{ (request()->is('peminjaman/*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('peminjaman/*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book-reader"></i>
+                        <p>
+                            Peminjaman
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/peminjaman/pesan" class="nav-link {{ (request()->is('peminjaman/pesan')) ? 'active' : '' }}">
+                                <i class="fa fa-user-friends nav-icon"></i>
+                                <p>Daftar Pemesanan</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/peminjaman/pinjam" class="nav-link {{ (request()->is('peminjaman/pinjam')) ? 'active' : '' }}">
+                                <i class="fa fa-user-friends nav-icon"></i>
+                                <p>Daftar Peminjaman</p>
                             </a>
                         </li>
                     </ul>

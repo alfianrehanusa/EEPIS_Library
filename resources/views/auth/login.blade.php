@@ -17,17 +17,15 @@
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; background-image: url('{{ asset('image/library_login.jpg')}}')">
     <div class="login-box">
-        <div class="login-logo">
+        <div class="login-logo bg-white rounded-top mb-0">
             <a href="/">Perpustakaan <b>PENS</b></a>
         </div>
-        <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
+            <div class="card-body login-card-body rounded-bottom">
                 <p class="login-box-msg">Masuk untuk memulai sesi Anda</p>
 
                 <form action="{{ route('login') }}" method="post">
@@ -63,7 +61,7 @@
                             </div> --}}
                         </div>
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                     </div>
                 </form>
