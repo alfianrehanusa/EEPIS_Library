@@ -109,6 +109,12 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="/laporan" class="nav-link {{ (request()->is('laporan')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>Laporan Peminjaman</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/pengaturan" class="nav-link {{ (request()->is('pengaturan')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Pengaturan</p>

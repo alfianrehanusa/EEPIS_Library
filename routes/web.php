@@ -80,6 +80,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user/pustakawan/edit', 'User\PustakawanController@edit');
     Route::post('user/pustakawan/delete', 'User\PustakawanController@delete');
 
+    //Laporan
+    Route::get('laporan', 'LaporanController@index');
+
     //GET FILE
     //Cover Buku
     Route::get('file/cover_buku/{filename}', 'FileController@index');
