@@ -26,6 +26,9 @@ class MahasiswaController{
             if(User::find($request->input('nrp'))){
                 return response()->json(array('status' => 'failed', 'reason' => 'NRP sudah ada!'));
             }
+            if(User::where('email', '=', $request->input('email'))->first()){
+                return response()->json(array('status' => 'failed', 'reason' => 'Alamat email sudah ada!'));
+            }
 
             DB::beginTransaction();
             $add = new User;
@@ -48,6 +51,10 @@ class MahasiswaController{
             if($request->input('edit_nrp') != $request->input('nrp_asal') && User::find($request->input('edit_nrp'))){
                 return response()->json(array('status' => 'failed', 'reason' => 'NRP sudah ada!'));
             }
+            if($request->input('edit_email') != $request->input('email_asal') && User::where('email', '=', $request->input('edit_email'))->first()){
+                return response()->json(array('status' => 'failed', 'reason' => 'Alamat email sudah ada!'));
+            }
+
             $data = User::find($request->input('nrp_asal'));
             $data->id = $request->input('edit_nrp');
             $data->nama = $request->input('edit_nama');

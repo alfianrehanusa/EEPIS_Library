@@ -9,8 +9,33 @@ use DB;
 use App\Models\Peminjaman;
 use App\Models\Pengaturan;
 use App\Models\Buku;
+use App\Models\User;
 
 class ApiController extends Controller{
+
+    function login(Request $request){
+
+        $valid = User::where('email', '=', $request->input('email'))
+            ->where('password', '=', md5($request->input('password')))
+            ->first();
+        if(!$valid){
+            return response()->json(array('status' => 'error', 'reason' => 'Username atau password salah'));
+        }
+
+        try {
+            $token = md5(date('Y-m-d') . uniqid(null, true) . $request->input('email'));
+            DB::beginTransaction();
+
+            $valid->login_token = $token;
+            $valid->save();
+
+            DB::commit();
+            return response()->json(array('status' => 'success', 'token' => $token));
+        } catch (Exception $e) {
+            DB::rollback();
+            return response()->json(array('status' => 'error', 'reason' => 'Kesalahan sistem!'));
+        }
+    }
 
     function pesan(Request $request){
         try {

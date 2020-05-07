@@ -185,7 +185,7 @@
                 message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
             }).find(".modal-dialog").addClass("modal-dialog-centered");
             $.post("/user/mahasiswa/read", {id: id}, function(data, status){
-                var message = '<form id="edit_mahasiswa"><input type="hidden" name="nrp_asal" value="' + data.id + '">';
+                var message = '<form id="edit_mahasiswa"><input type="hidden" name="nrp_asal" value="' + data.id + '"><input type="hidden" name="email_asal" value="' + data.email + '">';
                 message += '<div class="form-group"><label for="edit_nrp" class="font-weight-normal">NRP :</label><input readonly type="text" class="form-control" placeholder="NRP" id="edit_nrp" name="edit_nrp" autocomplete="off" value="' + data.id + '" required></div>';
                 message += '<div class="form-group"><label for="edit_nama" class="font-weight-normal">Nama Lengkap :</label><input type="text" class="form-control" placeholder="Nama Lengkap" id="edit_nama" name="edit_nama" autocomplete="off" value="' + data.nama + '" required></div>';
                 message += '<div class="form-group"><label for="edit_email" class="font-weight-normal">Alamat Email :</label><input type="email" class="form-control" placeholder="Alamat Email" id="edit_email" name="edit_email" autocomplete="off" value="' + data.email + '" required></div>';
