@@ -30,7 +30,12 @@ class ApiController extends Controller{
             $valid->save();
 
             DB::commit();
-            return response()->json(array('status' => 'success', 'reason' => 'Login berhasil', 'token' => $token));
+            return response()->json(array(
+                'status' => 'success',
+                'reason' => 'Login berhasil',
+                'name' => $valid->nama,
+                'token' => $token
+            ));
         } catch (Exception $e) {
             DB::rollback();
             return response()->json(array('status' => 'error', 'reason' => 'Kesalahan sistem!'));
