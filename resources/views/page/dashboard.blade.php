@@ -1,5 +1,9 @@
 @extends('layouts.page')
 
+@section('title')
+    Dashboard
+@endsection
+
 @section('content')
 
 <div class="content-header ml-2 mr-2">

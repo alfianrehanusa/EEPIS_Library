@@ -80,6 +80,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user/karyawan/edit', 'User\KaryawanController@edit');
     Route::post('user/karyawan/delete', 'User\KaryawanController@delete');
 
+    //User Admin
+    Route::get('useradmin', 'UseradminController@index');
+    Route::post('useradmin/read', 'UseradminController@read');
+    Route::post('useradmin/add', 'UseradminController@add');
+    Route::post('useradmin/edit', 'UseradminController@edit');
+    Route::post('useradmin/delete', 'UseradminController@delete');
+
     //Laporan
     Route::get('laporan', 'LaporanController@index');
 

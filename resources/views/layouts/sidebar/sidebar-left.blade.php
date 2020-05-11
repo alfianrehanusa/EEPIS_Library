@@ -97,17 +97,23 @@
                         </li>
                         <li class="nav-item">
                             <a href="/user/dosen" class="nav-link {{ (request()->is('user/dosen')) ? 'active' : '' }}">
-                                <i class="fa fa-user nav-icon"></i>
+                                <i class="fa fa-user-graduate nav-icon"></i>
                                 <p>Dosen</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/user/karyawan" class="nav-link {{ (request()->is('user/karyawan')) ? 'active' : '' }}">
-                                <i class="fa fa-user nav-icon"></i>
+                                <i class="fa fa-user-tie nav-icon"></i>
                                 <p>Karyawan</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/useradmin" class="nav-link {{ (request()->is('useradmin')) ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-user-cog"></i>
+                        <p>User Admin</p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="/laporan" class="nav-link {{ (request()->is('laporan')) ? 'active' : '' }}">

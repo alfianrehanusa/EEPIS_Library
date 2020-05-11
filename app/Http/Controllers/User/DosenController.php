@@ -26,7 +26,7 @@ class DosenController{
             if(User::find($request->input('nip'))){
                 return response()->json(array('status' => 'failed', 'reason' => 'NIP sudah ada!'));
             }
-            if(User::find($request->input('email'))){
+            if(User::where('email', '=', $request->input('email'))->first()){
                 return response()->json(array('status' => 'failed', 'reason' => 'Alamat email sudah ada!'));
             }
 
@@ -51,7 +51,7 @@ class DosenController{
             if($request->input('edit_nip') != $request->input('nip_asal') && User::find($request->input('edit_nip'))){
                 return response()->json(array('status' => 'failed', 'reason' => 'NIP sudah ada!'));
             }
-            if(User::find($request->input('email'))){
+            if($request->input('edit_email') != $request->input('email_asal') && User::where('email', '=', $request->input('edit_email'))->first()){
                 return response()->json(array('status' => 'failed', 'reason' => 'Alamat email sudah ada!'));
             }
 

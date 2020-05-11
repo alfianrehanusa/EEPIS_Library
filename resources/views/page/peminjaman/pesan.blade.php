@@ -1,5 +1,9 @@
 @extends('layouts.page')
 
+@section('title')
+    Peminjaman Pesan
+@endsection
+
 @section('content')
 
 <div class="content-header ml-2 mr-2">

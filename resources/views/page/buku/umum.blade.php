@@ -1,5 +1,9 @@
 @extends('layouts.page')
 
+@section('title')
+    Buku Umum
+@endsection
+
 @section('content')
 
 <div class="content-header ml-2 mr-2">
