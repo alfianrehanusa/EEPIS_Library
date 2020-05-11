@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>AdminLTE 3 | Starter</title>
+    <title>@yield('title') | Perpustakaan PENS</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
