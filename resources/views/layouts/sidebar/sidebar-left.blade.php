@@ -1,6 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/" class="brand-link">
+        <img src="{{ asset('image/logo_pens_putih.png') }}" alt="Logo PENS" class="brand-image" style="opacity: .8">
         <span class="brand-text font-weight-light">Perpustakaan <b>PENS</b></span>
     </a>
 
@@ -100,12 +101,12 @@
                                 <p>Dosen</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="/user/pustakawan" class="nav-link {{ (request()->is('user/pustakawan')) ? 'active' : '' }}">
-                                <i class="far fa-user nav-icon"></i>
-                                <p>Pustakawan</p>
+                        <li class="nav-item">
+                            <a href="/user/karyawan" class="nav-link {{ (request()->is('user/karyawan')) ? 'active' : '' }}">
+                                <i class="fa fa-user nav-icon"></i>
+                                <p>Karyawan</p>
                             </a>
-                        </li> --}}
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

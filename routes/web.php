@@ -73,15 +73,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user/dosen/add', 'User\DosenController@add');
     Route::post('user/dosen/edit', 'User\DosenController@edit');
     Route::post('user/dosen/delete', 'User\DosenController@delete');
-    //Pustakawan
-    Route::get('user/pustakawan', 'User\PustakawanController@index');
-    Route::post('user/pustakawan/read', 'User\PustakawanController@read');
-    Route::post('user/pustakawan/add', 'User\PustakawanController@add');
-    Route::post('user/pustakawan/edit', 'User\PustakawanController@edit');
-    Route::post('user/pustakawan/delete', 'User\PustakawanController@delete');
+    //Karyawan
+    Route::get('user/karyawan', 'User\KaryawanController@index');
+    Route::post('user/karyawan/read', 'User\KaryawanController@read');
+    Route::post('user/karyawan/add', 'User\KaryawanController@add');
+    Route::post('user/karyawan/edit', 'User\KaryawanController@edit');
+    Route::post('user/karyawan/delete', 'User\KaryawanController@delete');
 
     //Laporan
     Route::get('laporan', 'LaporanController@index');
+
+    //Pengaturan
+    Route::get('pengaturan', 'PengaturanController@index');
+    Route::post('pengaturan/read', 'PengaturanController@read');
+    Route::post('pengaturan/edit', 'PengaturanController@edit');
 
     //GET FILE
     //Cover Buku
