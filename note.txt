@@ -1,1 +1,0 @@
-$DeferenceInDays = Carbon::parse(Carbon::now())->diffInDays($dataToCompare);
