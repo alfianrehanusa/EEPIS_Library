@@ -45,8 +45,18 @@ class ApiController extends Controller{
     function pesan(Request $request){
         try {
             DB::beginTransaction();
-            //Pengecekan stok buku
+
+            //validasi buku dan user
             $data = Buku::find($request->input('id_buku'));
+            if(!$data){
+                return response()->json(array('status' => 'failed', 'reason' => 'Buku tidak ditemukan!'));
+            }
+            $user = User::find($request->input('id_user'));
+            if(!$user){
+                return response()->json(array('status' => 'failed', 'reason' => 'User tidak ditemukan!'));
+            }
+
+            //Pengecekan stok buku
             $buku_pesan = Peminjaman::where('id_buku', '=', $request->input('id_buku'))
                 ->where('status', '=', 1)
                 ->count();

@@ -50,6 +50,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/chartjs-plugin-datalabels.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
     <!-- Datatable -->

@@ -97,7 +97,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     //GET FILE
     //Cover Buku
-    Route::get('file/cover_buku/{filename}', 'FileController@index');
+    Route::get('file/cover_buku/{filename}', 'FileController@coverBuku');
+    //File Ebook
+    Route::get('file/ebook/{filename}', 'FileController@ebook');
 });
 
 Route::get('/', function () {
