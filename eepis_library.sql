@@ -50,6 +50,39 @@ INSERT INTO `buku` VALUES (6,'Sherlock Holmes Best Of The Best','2019','Detectiv
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ebook`
+--
+
+DROP TABLE IF EXISTS `ebook`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ebook` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `judul` text NOT NULL,
+  `tahun` varchar(5) NOT NULL,
+  `pengarang` text NOT NULL,
+  `sinopsis` text NOT NULL,
+  `ebook` varchar(50) NOT NULL,
+  `gambar` varchar(50) NOT NULL,
+  `keterangan` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ebook`
+--
+
+LOCK TABLES `ebook` WRITE;
+/*!40000 ALTER TABLE `ebook` DISABLE KEYS */;
+INSERT INTO `ebook` VALUES (2,'Adventure of Sherlock Holmes','2019','Sir Arthur Conan Doyle','Detective','5eb9816606f5c.pdf','5eb98166044f3.jpg',NULL,'2020-05-11 16:20:21','2020-05-11 16:46:30');
+/*!40000 ALTER TABLE `ebook` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -120,7 +153,7 @@ CREATE TABLE `peminjaman` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +162,7 @@ CREATE TABLE `peminjaman` (
 
 LOCK TABLES `peminjaman` WRITE;
 /*!40000 ALTER TABLE `peminjaman` DISABLE KEYS */;
-INSERT INTO `peminjaman` VALUES (1,'2103187051',6,'2020-04-02','2020-04-05','2020-05-06',4,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(2,'2103187052',7,'2020-05-03','2020-05-05','2020-05-06',5,NULL,'2020-05-06 16:54:45'),(3,'2531470203980002',8,'2020-05-07',NULL,NULL,1,'2020-05-06 17:49:22','2020-05-06 17:49:22'),(4,'2103187052',9,'2020-05-07','2020-05-07',NULL,3,'2020-05-06 18:59:23','2020-05-06 18:59:35');
+INSERT INTO `peminjaman` VALUES (1,'2103187051',6,'2020-04-02','2020-04-05','2020-05-06',4,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(2,'2103187052',7,'2020-05-03','2020-05-05','2020-05-06',5,NULL,'2020-05-06 16:54:45'),(3,'2531470203980002',8,'2020-05-07',NULL,NULL,1,'2020-05-06 17:49:22','2020-05-06 17:49:22'),(4,'2103187052',9,'2020-05-07','2020-05-12',NULL,3,'2020-05-06 18:59:23','2020-05-06 18:59:35'),(5,'2103187052',7,'2020-05-04','2020-05-06','2020-05-07',5,NULL,'2020-05-07 16:54:45');
 /*!40000 ALTER TABLE `peminjaman` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +190,7 @@ CREATE TABLE `pengaturan` (
 
 LOCK TABLES `pengaturan` WRITE;
 /*!40000 ALTER TABLE `pengaturan` DISABLE KEYS */;
-INSERT INTO `pengaturan` VALUES (1,'batas_pesan_diambil','5',NULL,NULL),(2,'batas_pengembalian_buku','14',NULL,NULL);
+INSERT INTO `pengaturan` VALUES (1,'Batas Pesanan Diambil','5',NULL,'2020-05-10 06:41:42'),(2,'Batas Pengembalian Buku','14',NULL,NULL);
 /*!40000 ALTER TABLE `pengaturan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +247,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2103187051','Alfian Rehanusa Wibowo','alfianwibowo@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:35:19','2020-04-17 10:35:19'),('2103187052','Dimas Eko Setyo Budi','dimaseko@it.student.pens.ac.id','25d55ad283aa400af464c76d713c07ad','mahasiswa',NULL,NULL,'2020-04-17 10:40:40','2020-04-17 10:40:40'),('2103187053','d','wibowoalfian5229@gmail.comd','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:05:32','2020-04-20 03:05:32'),('2103187054','c','wibowoalfian5229@gmail.comc','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:04:07','2020-04-20 03:04:07'),('2103187055','b','wibowoalfian5229@gmail.comb','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:03:31','2020-04-20 03:03:31'),('2103187056','Afrizal Fatra Wibowo','afrizalfatra@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:37:04','2020-04-17 10:37:04'),('2103187057','aaa','wibowoalfian5229@gmail.com','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa','dac96dc42f24b87eb4236da59931c9da',NULL,'2020-04-20 03:03:12','2020-05-07 18:28:51'),('2531470203980002','Ira Prasetyaningrum','iraprasetyaningrum@pens.ac.id','25d55ad283aa400af464c76d713c07ad','dosen',NULL,NULL,'2020-04-21 15:09:10','2020-04-21 15:09:10');
+INSERT INTO `user` VALUES ('1203040','Security Secure','security@secure.com','25d55ad283aa400af464c76d713c07ad','karyawan',NULL,NULL,'2020-05-10 06:50:01','2020-05-10 06:50:21'),('2103187051','Alfian Rehanusa Wibowo','alfianwibowo@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:35:19','2020-04-17 10:35:19'),('2103187052','Dimas Eko Setyo Budi','dimaseko@it.student.pens.ac.id','25d55ad283aa400af464c76d713c07ad','mahasiswa',NULL,NULL,'2020-04-17 10:40:40','2020-04-17 10:40:40'),('2103187053','dd','wibowoalfian5229@gmail.comd','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:05:32','2020-05-10 06:44:49'),('2103187054','c','wibowoalfian5229@gmail.comc','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:04:07','2020-04-20 03:04:07'),('2103187055','b','wibowoalfian5229@gmail.comb','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:03:31','2020-04-20 03:03:31'),('2103187056','Afrizal Fatra Wibowo','afrizalfatra@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:37:04','2020-04-17 10:37:04'),('2103187057','aaa','wibowoalfian5229@gmail.com','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa','93ca5679db4a31ad13c18683d1ed476e',NULL,'2020-04-20 03:03:12','2020-05-10 05:17:55'),('2531470203980002','Ira Prasetyaningrum','iraprasetyaningrum@pens.ac.id','25d55ad283aa400af464c76d713c07ad','dosen',NULL,NULL,'2020-04-21 15:09:10','2020-04-21 15:09:10');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +269,7 @@ CREATE TABLE `user_admin` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +278,7 @@ CREATE TABLE `user_admin` (
 
 LOCK TABLES `user_admin` WRITE;
 /*!40000 ALTER TABLE `user_admin` DISABLE KEYS */;
-INSERT INTO `user_admin` VALUES (1,'Alfian Rehanusa Wibowo','wibowoalfian5229@gmail.com',NULL,'$2y$10$1KmSvsxkhYVfiTdUF6WYW.c3g3xt0jlyNs9PGUi.bgSmckNOmnK16',NULL,'2020-04-13 08:53:14','2020-04-13 08:53:14');
+INSERT INTO `user_admin` VALUES (1,'Alfian Rehanusa Wibowo','wibowoalfian5229@gmail.com',NULL,'$2y$10$1KmSvsxkhYVfiTdUF6WYW.c3g3xt0jlyNs9PGUi.bgSmckNOmnK16',NULL,'2020-04-13 08:53:14','2020-04-13 08:53:14'),(2,'Pustakawan','pustakawan@gmail.com',NULL,'$2y$10$qRMcWFdQ2HkCBk9i1F5TGuyCllSUetSZMZYG5YoftcmRQXF9d.E3q',NULL,'2020-05-11 04:28:42','2020-05-11 06:30:38');
 /*!40000 ALTER TABLE `user_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -258,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-09 10:40:17
+-- Dump completed on 2020-05-12 23:37:10
