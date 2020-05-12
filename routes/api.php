@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'ApiController@login');
 
-Route::post('/pesan', 'ApiController@pesan');
+Route::group(['middleware' => ['CheckTokenApi']], function () {
+    Route::post('/pesan', 'ApiController@pesan');
+});

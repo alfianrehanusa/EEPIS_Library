@@ -9,7 +9,7 @@ use File;
 use Response;
 
 class FileController extends Controller{
-    function index($filename){
+    function coverBuku($filename){
         Auth::user();
         if (strpos($filename, '.') !== false && Auth::check()) {
             $path = storage_path('app/cover_buku/' . $filename);
@@ -24,4 +24,13 @@ class FileController extends Controller{
         }
     }
 
+    function ebook($filename){
+        $path = storage_path('app/file_ebook/' . $filename);
+        try {
+            $response = Response::make(File::get($path), 200);
+            return $response->header("Content-Type", 'application/pdf');
+        } catch (FileNotFoundException $exception) {
+            abort(404);
+        }
+    }
 }
