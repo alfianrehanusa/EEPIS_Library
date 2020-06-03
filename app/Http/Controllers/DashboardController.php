@@ -33,7 +33,7 @@ class DashboardController extends Controller{
             ->groupBy(DB::raw('MONTH(tgl_pinjam)'))
             ->get();
         foreach ($data as $key) {
-            $total_pinjam_bulan[$key->month] = $key->count;
+            $total_pinjam_bulan[($key->month)-1] = $key->count;
         }
 
         $status_pengembalian = Peminjaman::selectRaw('count(status) AS status_pengembalian')

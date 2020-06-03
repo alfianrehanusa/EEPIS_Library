@@ -13,13 +13,26 @@ use App\Models\User;
 
 class ApiController extends Controller{
 
+    function checkToken(Request $request){
+
+        $data = User::where([
+            ['email', '=', $request->input('email')],
+            ['login_token', '=', $request->input('token')]
+        ])->first();
+        if(!$data){
+            return response()->json(['status' => 'failed', 'reason' => 'Invalid token!']);
+        }
+        return response()->json(['status' => 'success', 'reason' => 'Token valid!']);
+
+    }
+
     function login(Request $request){
 
         $valid = User::where('email', '=', $request->input('email'))
             ->where('password', '=', md5($request->input('password')))
             ->first();
         if(!$valid){
-            return response()->json(array('status' => 'error', 'reason' => 'Username atau password salah'));
+            return response()->json(array('status' => 'failed', 'reason' => 'Username atau password salah!'));
         }
 
         try {
@@ -38,7 +51,7 @@ class ApiController extends Controller{
             ));
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json(array('status' => 'error', 'reason' => 'Kesalahan sistem!'));
+            return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan sistem!'));
         }
     }
 
@@ -48,12 +61,9 @@ class ApiController extends Controller{
 
             //validasi buku dan user
             $data = Buku::find($request->input('id_buku'));
-            if(!$data){
-                return response()->json(array('status' => 'failed', 'reason' => 'Buku tidak ditemukan!'));
-            }
-            $user = User::find($request->input('id_user'));
-            if(!$user){
-                return response()->json(array('status' => 'failed', 'reason' => 'User tidak ditemukan!'));
+            $user = User::find($request->header('user'));
+            if(!$data || !$user){
+                return response()->json(array('status' => 'failed', 'reason' => 'Data tidak ditemukan!'));
             }
 
             //Pengecekan stok buku
@@ -66,7 +76,7 @@ class ApiController extends Controller{
             }
 
             $data = new Peminjaman;
-            $data->id_user = $request->input('id_user');
+            $data->id_user = $request->header('user');
             $data->id_buku = $request->input('id_buku');
             $data->tgl_pesan = date('Y-m-d');
             $data->status = 1;
@@ -84,6 +94,18 @@ class ApiController extends Controller{
             DB::rollback();
             return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan sistem!'));
         }
+    }
+
+    public function riwayat(Request $request){
+
+        $data = Peminjaman::where('id_user', '=', $request->input('id_user'))
+            ->whereIn('status', [4, 5])
+            ->get();
+        if($data->isEmpty()){
+            return response()->json(array('status' => 'failed', 'reason' => 'User tidak ditemukan!'));
+        }
+
+        return response()->json(array('status' => 'success', 'data' => $data));
     }
 
 }

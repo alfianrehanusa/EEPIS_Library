@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+
 use Closure;
 
 class CheckTokenApi
@@ -15,6 +17,13 @@ class CheckTokenApi
      */
     public function handle($request, Closure $next)
     {
+        $data = User::where([
+                ['id', '=', $request->header('user')],
+                ['login_token', '=', $request->header('token')]
+            ])->first();
+        if(!$data){
+            return response()->json(['status' => 'failed', 'reason' => 'Invalid token']);
+        }
         return $next($request);
     }
 }
