@@ -45,7 +45,7 @@ CREATE TABLE `buku` (
 
 LOCK TABLES `buku` WRITE;
 /*!40000 ALTER TABLE `buku` DISABLE KEYS */;
-INSERT INTO `buku` VALUES (6,'Sherlock Holmes Best Of The Best','2019','Detective Conan Doyle','Petualangan Sherlock Holmes Dengan Dokter Watson',11,'umum','5ea9ac993a1a2.jpg',NULL,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(7,'Judul Jurnal','2018','Pengarang Jurnal','Sinopsis Jurnal',4,'jurnal','5ea9bc81be9e1.jpg',NULL,'2020-04-29 17:42:25','2020-05-06 16:54:45'),(8,'Judul Majalah','1998','Pengarang','Sinopsis Majalah',1,'majalah','5ea9be9d25a87.jpg',NULL,'2020-04-29 17:51:25','2020-04-29 17:51:25'),(9,'PA/TA','2017','pengarangPATA','Sinopsis PATA',0,'pa_ta','5ea9bec12868b.jpg',NULL,'2020-04-29 17:52:01','2020-05-06 18:59:35');
+INSERT INTO `buku` VALUES (6,'Sherlock Holmes Best Of The Best','2019','Detective Conan Doyle','Petualangan Sherlock Holmes Dengan Dokter Watson',11,'umum','5ea9ac993a1a2.jpg',NULL,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(7,'Judul Jurnal','2018','Pengarang Jurnal','Sinopsis Jurnal',4,'jurnal','5ea9bc81be9e1.jpg',NULL,'2020-04-29 17:42:25','2020-05-06 16:54:45'),(8,'Judul Majalah','1998','Pengarang','Sinopsis Majalah',2,'majalah','5ea9be9d25a87.jpg',NULL,'2020-04-29 17:51:25','2020-05-29 15:46:41'),(9,'PA/TA','2017','pengarangPATA','Sinopsis PATA',0,'pa_ta','5ea9bec12868b.jpg',NULL,'2020-04-29 17:52:01','2020-05-06 18:59:35');
 /*!40000 ALTER TABLE `buku` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +153,7 @@ CREATE TABLE `peminjaman` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `peminjaman` (
 
 LOCK TABLES `peminjaman` WRITE;
 /*!40000 ALTER TABLE `peminjaman` DISABLE KEYS */;
-INSERT INTO `peminjaman` VALUES (1,'2103187051',6,'2020-04-02','2020-04-05','2020-05-06',4,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(2,'2103187052',7,'2020-05-03','2020-05-05','2020-05-06',5,NULL,'2020-05-06 16:54:45'),(3,'2531470203980002',8,'2020-05-07',NULL,NULL,1,'2020-05-06 17:49:22','2020-05-06 17:49:22'),(4,'2103187052',9,'2020-05-07','2020-05-12',NULL,3,'2020-05-06 18:59:23','2020-05-06 18:59:35'),(5,'2103187052',7,'2020-05-04','2020-05-06','2020-05-07',5,NULL,'2020-05-07 16:54:45');
+INSERT INTO `peminjaman` VALUES (1,'2103187051',6,'2020-04-02','2020-04-05','2020-05-06',4,'2020-04-29 15:08:59','2020-05-06 16:46:04'),(2,'2103187052',7,'2020-05-03','2020-05-05','2020-05-06',5,NULL,'2020-05-06 16:54:45'),(3,'2531470203980002',8,'2020-05-07',NULL,NULL,1,'2020-05-06 17:49:22','2020-05-06 17:49:22'),(4,'2103187052',9,'2020-05-07','2020-05-12',NULL,3,'2020-05-06 18:59:23','2020-05-06 18:59:35'),(5,'2103187052',7,'2020-05-04','2020-05-06','2020-05-07',5,NULL,'2020-05-07 16:54:45'),(6,'2103187051',8,'2020-05-29','2020-05-29','2020-05-29',5,'2020-05-29 15:46:13','2020-05-29 15:46:41');
 /*!40000 ALTER TABLE `peminjaman` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +247,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('1203040','Security Secure','security@secure.com','25d55ad283aa400af464c76d713c07ad','karyawan',NULL,NULL,'2020-05-10 06:50:01','2020-05-10 06:50:21'),('2103187051','Alfian Rehanusa Wibowo','alfianwibowo@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:35:19','2020-04-17 10:35:19'),('2103187052','Dimas Eko Setyo Budi','dimaseko@it.student.pens.ac.id','25d55ad283aa400af464c76d713c07ad','mahasiswa',NULL,NULL,'2020-04-17 10:40:40','2020-04-17 10:40:40'),('2103187053','dd','wibowoalfian5229@gmail.comd','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:05:32','2020-05-10 06:44:49'),('2103187054','c','wibowoalfian5229@gmail.comc','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:04:07','2020-04-20 03:04:07'),('2103187055','b','wibowoalfian5229@gmail.comb','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:03:31','2020-04-20 03:03:31'),('2103187056','Afrizal Fatra Wibowo','afrizalfatra@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:37:04','2020-04-17 10:37:04'),('2103187057','aaa','wibowoalfian5229@gmail.com','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa','5ce8cf9318eb5ea3056af335132b8a48',NULL,'2020-04-20 03:03:12','2020-05-18 18:44:40'),('2531470203980002','Ira Prasetyaningrum','iraprasetyaningrum@pens.ac.id','25d55ad283aa400af464c76d713c07ad','dosen',NULL,NULL,'2020-04-21 15:09:10','2020-04-21 15:09:10');
+INSERT INTO `user` VALUES ('1203040','Security Secure','security@secure.com','25d55ad283aa400af464c76d713c07ad','karyawan',NULL,NULL,'2020-05-10 06:50:01','2020-05-10 06:50:21'),('2103187051','Alfian Rehanusa Wibowo','wibowoalfian5229@gmail.com','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa','b0ce4e91626ac73567b9413967165f77',NULL,'2020-04-17 10:35:19','2020-06-01 16:21:41'),('2103187052','Dimas Eko Setyo Budi','dimaseko@it.student.pens.ac.id','25d55ad283aa400af464c76d713c07ad','mahasiswa',NULL,NULL,'2020-04-17 10:40:40','2020-04-17 10:40:40'),('2103187053','dd','wibowoalfian5229@gmail.comd','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:05:32','2020-05-10 06:44:49'),('2103187054','c','wibowoalfian5229@gmail.comc','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:04:07','2020-04-20 03:04:07'),('2103187055','b','wibowoalfian5229@gmail.comb','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-20 03:03:31','2020-04-20 03:03:31'),('2103187056','Afrizal Fatra Wibowo','afrizalfatra@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa',NULL,NULL,'2020-04-17 10:37:04','2020-04-17 10:37:04'),('2103187057','aaa','alfianwibowo@it.student.pens.ac.id','8ccf0eb10a5ac6aacc12345253757c77','mahasiswa','6ec5abab509a98886ed00c9bcfbb5a0d',NULL,'2020-04-20 03:03:12','2020-05-28 12:02:25'),('2531470203980002','Ira Prasetyaningrum','iraprasetyaningrum@pens.ac.id','25d55ad283aa400af464c76d713c07ad','dosen',NULL,NULL,'2020-04-21 15:09:10','2020-04-21 15:09:10');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-19 10:50:06
+-- Dump completed on 2020-06-03 10:01:21
