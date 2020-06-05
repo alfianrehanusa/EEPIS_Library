@@ -107,6 +107,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //UTIL PINJAM
     Route::post('peminjaman/read', 'Peminjaman\UtilController@read');
+    Route::post('peminjaman/pesan/delete', 'Peminjaman\UtilController@deletePesan');
+    Route::post('peminjaman/pinjam/delete', 'Peminjaman\UtilController@deletePinjam');
 });
 
 Route::get('/', function () {

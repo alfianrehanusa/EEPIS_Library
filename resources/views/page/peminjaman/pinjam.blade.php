@@ -63,6 +63,7 @@
                             <td>
                                 {{-- <button type="button" class="btn btn-sm btn-warning" onclick="editPinjam({{$key->id_pinjam}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button> --}}
                                 <button type="button" class="btn btn-sm btn-success" onclick="kembalikanBuku({{$key->id_pinjam}})"><i class="fa fa-book mr-1"></i>Kembalikan Buku</button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="hapusPinjam({{$key->id_pinjam}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -360,6 +361,49 @@
                                     data.reason,
                                     'error'
                                 );
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function hapusPinjam(id){
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: '<i class="fa fa-trash"> Ya, hapus data',
+                cancelButtonText: '<i class="fa fa-times"> Batal'
+            }).then((result) => {
+                if(result.value){
+                    var formdata = new FormData();
+                    formdata.append('id', id);
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/peminjaman/pinjam/delete',
+                        data: formdata,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success:function(data){
+                            if(data.status === 'success'){
+                                Swal.fire(
+                                    'Sukses!',
+                                    data.reason,
+                                    'success'
+                                ).then(() => {
+                                    location.reload(true);
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Oops...',
+                                    data.reason,
+                                    'error'
+                                )
                             }
                         }
                     });

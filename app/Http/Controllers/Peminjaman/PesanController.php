@@ -34,21 +34,22 @@ class PesanController extends Controller{
         try {
             DB::beginTransaction();
 
+            //Pengecekan stok buku
+            $data = Buku::find($request->input('id_buku'));
+            $buku_pesan = Peminjaman::where('id_buku', '=', $request->input('id_buku'))
+                ->where('status', '=', 1)
+                ->count();
+            $stok_buku = $data->jumlah - $buku_pesan;
+            if($stok_buku < 1){
+                return response()->json(array('status' => 'failed', 'reason' => 'Stok buku kosong!'));
+            }
+
             $add = new Peminjaman;
             $add->id_user = $request->input('id_user');
             $add->id_buku = $request->input('id_buku');
             $add->tgl_pesan = $request->input('tgl_pesan');
             $add->status = 1;
             $add->save();
-
-            //pengurangan jumlah buku
-            $data = Buku::where('id', '=', $request->input('id_buku'))
-                ->where('jumlah', '>', 0)->first();
-            if(!$data){
-                return response()->json(array('status' => 'failed', 'reason' => 'Stok buku kosong!'));
-            }
-            $data->jumlah = $data->jumlah - 1;
-            $data->save();
 
             DB::commit();
             return response()->json(array('status' => 'success', 'reason' => 'Sukses pinjam buku.'));
