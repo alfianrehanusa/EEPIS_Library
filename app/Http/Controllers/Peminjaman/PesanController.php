@@ -52,7 +52,7 @@ class PesanController extends Controller{
             $add->save();
 
             DB::commit();
-            return response()->json(array('status' => 'success', 'reason' => 'Sukses pinjam buku.'));
+            return response()->json(array('status' => 'success', 'reason' => 'Sukses pesan buku.'));
         } catch (Exception $e) {
             DB::rollback();
             return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan sistem!'));
