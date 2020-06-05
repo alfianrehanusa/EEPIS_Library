@@ -241,8 +241,8 @@
                 $(document).ready(function(){
                     $("#edit_buku").submit(function(event){
                         event.preventDefault();
-                        $('#ubahResellerButtonLoading').show();
-                        $('#ubahResellerButtonSubmit').hide();
+                        $('#ubah_buku_btn_loading').show();
+                        $('#ubah_buku_btn_submit').hide();
                         $('.bootbox-close-button').hide();
                         var formData = new FormData(this);
                         $.ajax({
@@ -254,8 +254,8 @@
                             cache: false,
                             processData: false,
                             success:function(data){
-                                $('#ubahResellerButtonLoading').hide();
-                                $('#ubahResellerButtonSubmit').show();
+                                $('#ubah_buku_btn_loading').hide();
+                                $('#ubah_buku_btn_submit').show();
                                 $('.bootbox-close-button').show();
                                 if(data.status === 'success'){
                                     Swal.fire(

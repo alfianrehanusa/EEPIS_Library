@@ -183,7 +183,7 @@
                     $.ajax({
                         type: 'POST',
                         dataType: 'json',
-                        url: '/buku/jurnal/delete',
+                        url: '/buku/delete',
                         data: formdata,
                         contentType: false,
                         cache: false,
@@ -215,7 +215,7 @@
                 title: 'Perubahan Data Buku',
                 message: '<p><i class="fa fa-spin fa-spinner"></i> Loading...</p>'
             }).find(".modal-dialog").addClass("modal-dialog-centered");
-            $.post("/buku/jurnal/read", {id: id}, function(data, status){
+            $.post("/buku/read", {id: id}, function(data, status){
                 var message = '<form id="edit_buku"><input type="hidden" name="id_asal" value="' + data.id + '">';
                 // message += '<div class="form-group"><label for="edit_id" class="font-weight-normal">Id Buku :</label><input readonly type="text" class="form-control" placeholder="Id Buku" id="edit_id" name="edit_id" autocomplete="off" value="' + data.id + '" required></div>';
                 message += '<div class="form-group"><label for="edit_judul" class="font-weight-normal">Judul Buku :</label><input type="text" class="form-control" placeholder="Judul Buku" id="edit_judul" name="edit_judul" autocomplete="off" value="' + data.judul + '" required></div>';
@@ -242,8 +242,8 @@
                 $(document).ready(function(){
                     $("#edit_buku").submit(function(event){
                         event.preventDefault();
-                        $('#ubahResellerButtonLoading').show();
-                        $('#ubahResellerButtonSubmit').hide();
+                        $('#ubah_buku_btn_loading').show();
+                        $('#ubah_buku_btn_submit').hide();
                         $('.bootbox-close-button').hide();
                         var formData = new FormData(this);
                         $.ajax({
@@ -255,8 +255,8 @@
                             cache: false,
                             processData: false,
                             success:function(data){
-                                $('#ubahResellerButtonLoading').hide();
-                                $('#ubahResellerButtonSubmit').show();
+                                $('#ubah_buku_btn_loading').hide();
+                                $('#ubah_buku_btn_submit').show();
                                 $('.bootbox-close-button').show();
                                 if(data.status === 'success'){
                                     Swal.fire(

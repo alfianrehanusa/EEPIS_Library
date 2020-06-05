@@ -14,7 +14,7 @@ class UmumController extends Controller{
     function index(){
         $data = DB::table('buku')
             ->selectRaw("*, (select count(*) from peminjaman where id_buku = buku.id AND (status = '1' OR status = '3')) AS jumlah_dipinjam")
-            ->where('type_buku', '=', 'umum')
+            ->where('type_buku', '=', 1)
             ->orderBy('created_at', 'DESC')
             ->get();
         return view('page.buku.umum', compact('data'));
@@ -29,11 +29,6 @@ class UmumController extends Controller{
             abort(404);
         }
         return view('page.buku.umum_detail', compact('data'));
-    }
-
-    function read(Request $request){
-        $data = Buku::find($request->input('id'));
-        return response()->json($data);
     }
 
     function add(Request $request){
@@ -53,7 +48,7 @@ class UmumController extends Controller{
             $add->pengarang = $request->input('pengarang');
             $add->sinopsis = $request->input('sinopsis');
             $add->jumlah = $request->input('jumlah');
-            $add->type_buku = 'umum';
+            $add->type_buku = 1;
             $add->gambar = $gambar_name;
             $add->save();
             DB::commit();
@@ -110,29 +105,6 @@ class UmumController extends Controller{
         }catch(Exception $e){
             DB::rollback();
             return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan sistem!'));
-        }
-    }
-
-    function delete(Request $request){
-        try{
-            DB::beginTransaction();
-
-            //delete image
-            if(Buku::find($request->input('id'))){
-                $filename = Buku::find($request->input('id'));
-                unlink(storage_path('app/cover_buku/' . $filename->gambar));
-            }
-
-            //delete data
-            if(!Buku::find($request->input('id'))->delete()){
-                throw 'Kesalahan sistem!';
-            }
-
-            DB::commit();
-            return response()->json(array('status' => 'success', 'reason' => 'Sukses hapus data'));
-        }catch(Exception $e){
-            DB::rollback();
-            return response()->json(array('status' => 'success', 'reason' => 'Kesalahan sistem!'));
         }
     }
 

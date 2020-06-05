@@ -26,3 +26,5 @@ Route::group(['middleware' => ['CheckTokenApi']], function () {
 
     Route::post('/riwayat', 'ApiController@riwayat');
 });
+
+Route::post('/list_buku', 'ApiController@listBuku');

@@ -19,10 +19,8 @@ Route::group(['middleware' => ['auth']], function () {
     //Umum
     Route::get('buku/umum', 'Buku\UmumController@index');
     Route::get('buku/umum/detail/{id}', 'Buku\UmumController@detail');
-    Route::post('buku/umum/read', 'Buku\UmumController@read');
     Route::post('buku/umum/add', 'Buku\UmumController@add');
     Route::post('buku/umum/edit', 'Buku\UmumController@edit');
-    Route::post('buku/umum/delete', 'Buku\UmumController@delete');
     //Ebook
     Route::get('buku/ebook', 'Buku\EbookController@index');
     Route::get('buku/ebook/detail/{id}', 'Buku\EbookController@detail');
@@ -33,31 +31,29 @@ Route::group(['middleware' => ['auth']], function () {
     //Jurnal
     Route::get('buku/jurnal', 'Buku\JurnalController@index');
     Route::get('buku/jurnal/detail/{id}', 'Buku\JurnalController@detail');
-    Route::post('buku/jurnal/read', 'Buku\JurnalController@read');
     Route::post('buku/jurnal/add', 'Buku\JurnalController@add');
     Route::post('buku/jurnal/edit', 'Buku\JurnalController@edit');
-    Route::post('buku/jurnal/delete', 'Buku\JurnalController@delete');
     //Majalah
     Route::get('buku/majalah', 'Buku\MajalahController@index');
     Route::get('buku/majalah/detail/{id}', 'Buku\MajalahController@detail');
-    Route::post('buku/majalah/read', 'Buku\MajalahController@read');
     Route::post('buku/majalah/add', 'Buku\MajalahController@add');
     Route::post('buku/majalah/edit', 'Buku\MajalahController@edit');
-    Route::post('buku/majalah/delete', 'Buku\MajalahController@delete');
     //Proyek Akhir/Tugas Akhir
     Route::get('buku/pa_ta', 'Buku\PaTaController@index');
     Route::get('buku/pa_ta/detail/{id}', 'Buku\PaTaController@detail');
-    Route::post('buku/pa_ta/read', 'Buku\PaTaController@read');
     Route::post('buku/pa_ta/add', 'Buku\PaTaController@add');
     Route::post('buku/pa_ta/edit', 'Buku\PaTaController@edit');
-    Route::post('buku/pa_ta/delete', 'Buku\PaTaController@delete');
 
     //PEMINJAMAN
     //Daftar Pemesanan
     Route::get('peminjaman/pesan', 'Peminjaman\PesanController@index');
+    Route::post('peminjaman/pesan/add', 'Peminjaman\PesanController@add');
+    Route::post('peminjaman/pesan/edit', 'Peminjaman\PesanController@edit');
     Route::post('peminjaman/pesan/pinjam', 'Peminjaman\PesanController@pinjam');
     //Daftar Peminjaman
     Route::get('peminjaman/pinjam', 'Peminjaman\PinjamController@index');
+    Route::post('peminjaman/pinjam/add', 'Peminjaman\PinjamController@add');
+    Route::post('peminjaman/pinjam/edit', 'Peminjaman\PinjamController@edit');
     Route::post('peminjaman/pinjam/kembali', 'Peminjaman\PinjamController@kembali');
 
     //USER
@@ -100,6 +96,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('file/cover_buku/{filename}', 'FileController@coverBuku');
     //File Ebook
     Route::get('file/ebook/{filename}', 'FileController@ebook');
+
+    //UTIL BOOK
+    Route::post('buku/read', 'Buku\UtilController@read');
+    Route::post('buku/delete', 'Buku\UtilController@delete');
+    Route::post('buku/list_buku', 'Buku\UtilController@listBuku');
+
+    //UTIL USER
+    Route::post('user/list_user', 'User\UtilController@list');
+
+    //UTIL PINJAM
+    Route::post('peminjaman/read', 'Peminjaman\UtilController@read');
 });
 
 Route::get('/', function () {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Buku;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Ebook;
@@ -11,7 +10,7 @@ use DB;
 use Exception;
 use Storage;
 
-class EbookController extends Controller{
+class EbookController{
 
     function index(){
         $data = Ebook::orderBy('created_at', 'DESC')
@@ -31,6 +30,7 @@ class EbookController extends Controller{
         $data = Ebook::find($request->input('id'));
         return response()->json($data);
     }
+
     function add(Request $request){
         try{
             DB::beginTransaction();
