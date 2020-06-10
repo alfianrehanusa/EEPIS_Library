@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Exception;
-use DB;
 
 use App\Models\Peminjaman;
 use App\Models\Pengaturan;
 use App\Models\Buku;
 use App\Models\User;
-use PDO;
+
+use Exception;
+use DB;
+use Response;
+use File;
 
 class ApiController extends Controller{
 
     function checkToken(Request $request){
-
         $data = User::where([
             ['email', '=', $request->input('email')],
             ['login_token', '=', $request->input('token')]
@@ -28,7 +29,6 @@ class ApiController extends Controller{
     }
 
     function login(Request $request){
-
         $valid = User::where('email', '=', $request->input('email'))
             ->where('password', '=', md5($request->input('password')))
             ->first();
@@ -47,6 +47,7 @@ class ApiController extends Controller{
             return response()->json(array(
                 'status' => 'success',
                 'reason' => 'Login berhasil',
+                'id_user' => $valid->id,
                 'name' => $valid->nama,
                 'token' => $token
             ));
@@ -62,7 +63,7 @@ class ApiController extends Controller{
 
             //validasi buku dan user
             $data = Buku::find($request->input('id_buku'));
-            $user = User::find($request->header('user'));
+            $user = User::find($request->header('id_user'));
             if(!$data || !$user){
                 return response()->json(array('status' => 'failed', 'reason' => 'Data tidak ditemukan!'));
             }
@@ -77,7 +78,7 @@ class ApiController extends Controller{
             }
 
             $data = new Peminjaman;
-            $data->id_user = $request->header('user');
+            $data->id_user = $request->header('id_user');
             $data->id_buku = $request->input('id_buku');
             $data->tgl_pesan = date('Y-m-d');
             $data->status = 1;
@@ -97,16 +98,81 @@ class ApiController extends Controller{
         }
     }
 
-    public function riwayat(Request $request){
+    function listPesan(Request $request){
+        //batas waktu pinjam
+        $batas_waktu = Pengaturan::where('id', '=', '1')->first();
+        $batas_waktu = $batas_waktu->nilai;
 
-        $data = Peminjaman::where('id_user', '=', $request->input('id_user'))
-            ->whereIn('status', [4, 5])
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+        $data = DB::table('peminjaman AS A')
+            ->select(
+                'B.judul',
+                'A.tgl_pesan',
+                DB::raw('DATE_ADD(A.tgl_pesan, INTERVAL ' . $batas_waktu . ' DAY) AS batas_waktu'),
+                DB::raw('concat("' . $url_gambar . '", B.gambar) AS gambar')
+            )
+            ->join('buku AS B', 'B.id', '=', 'A.id_buku')
+            ->where('id_user', '=', $request->header('id_user'))
+            ->where('status', '=', '1')
+            ->orderBy('tgl_pesan', 'DESC')
             ->get();
-        if($data->isEmpty()){
-            return response()->json(array('status' => 'failed', 'reason' => 'User tidak ditemukan!'));
-        }
 
         return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
+    function listPinjam(Request $request){
+        //batas waktu pinjam
+        $batas_waktu = Pengaturan::where('id', '=', '2')->first();
+        $batas_waktu = $batas_waktu->nilai;
+
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+        $data = DB::table('peminjaman AS A')
+            ->select(
+                'B.judul',
+                'A.tgl_pinjam',
+                DB::raw('DATE_ADD(A.tgl_pinjam, INTERVAL ' . $batas_waktu . ' DAY) AS batas_waktu'),
+                DB::raw('concat("' . $url_gambar . '", B.gambar) AS gambar')
+            )
+            ->join('buku AS B', 'B.id', '=', 'A.id_buku')
+            ->where('id_user', '=', $request->header('id_user'))
+            ->where('status', '=', '3')
+            ->orderBy('tgl_pinjam', 'DESC')
+            ->get();
+
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
+    function riwayat(Request $request){
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+        $data = DB::table('peminjaman AS A')
+            ->select('B.judul', 'A.tgl_pinjam', 'A.tgl_kembali', DB::raw('concat("' . $url_gambar . '", B.gambar) AS gambar'))
+            ->join('buku AS B', 'B.id', '=', 'A.id_buku')
+            ->where('A.id_user', '=', $request->header('id_user'))
+            ->whereIn('A.status', [4, 5])
+            ->orderBy('A.tgl_kembali', 'DESC')
+            ->get();
+
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
+    function coverBuku($token, $filename){
+        //token check
+        $data = User::where('login_token', '=', $token)->first();
+        if(!$data){
+            return response()->json(['status' => 'failed', 'reason' => 'Invalid token']);
+        }
+
+        if (strpos($filename, '.') !== false) {
+            $path = storage_path('app/cover_buku/' . $filename);
+            try {
+                $response = Response::make(File::get($path), 200);
+                return $response->header("Content-Type", File::mimeType($path));
+            } catch (FileNotFoundException $exception) {
+                abort(404);
+            }
+        } else {
+            return response()->json(['status' => 'failed', 'reason' => 'Invalid image']);
+        }
     }
 
 }

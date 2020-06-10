@@ -18,7 +18,7 @@ class CheckTokenApi
     public function handle($request, Closure $next)
     {
         $data = User::where([
-                ['id', '=', $request->header('user')],
+                ['id', '=', $request->header('id_user')],
                 ['login_token', '=', $request->header('token')]
             ])->first();
         if(!$data){
