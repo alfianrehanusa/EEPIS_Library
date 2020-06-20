@@ -57,6 +57,28 @@ class ApiController extends Controller{
         }
     }
 
+    function listBuku(Request $request){
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+
+        $jumlah_pinjam = Peminjaman::select('id_buku', DB::raw('count(id_buku) AS jumlah_pinjam'))
+            ->where('status', '=', 1)
+            ->groupBy('id_buku');
+
+        $data = DB::table('buku AS A')
+            ->select(
+                'A.judul',
+                'B.nama_type',
+                DB::raw('concat("' . $url_gambar . '", A.gambar) AS gambar'),
+                DB::raw('IF(C.jumlah_pinjam IS NULL, A.jumlah, A.jumlah-C.jumlah_pinjam) AS jumlah')
+            )
+            ->join('type_buku AS B', 'A.type_buku', '=', 'B.id')
+            ->leftJoinSub($jumlah_pinjam, 'C', function ($join) {
+                $join->on('A.id', '=', 'C.id_buku');
+            })
+            ->get();
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
     function pesan(Request $request){
         try {
             DB::beginTransaction();
