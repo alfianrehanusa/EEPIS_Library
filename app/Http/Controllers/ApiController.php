@@ -66,6 +66,7 @@ class ApiController extends Controller{
 
         $data = DB::table('buku AS A')
             ->select(
+                'A.id',
                 'A.judul',
                 'B.nama_type',
                 DB::raw('concat("' . $url_gambar . '", A.gambar) AS gambar'),
@@ -74,8 +75,36 @@ class ApiController extends Controller{
             ->join('type_buku AS B', 'A.type_buku', '=', 'B.id')
             ->leftJoinSub($jumlah_pinjam, 'C', function ($join) {
                 $join->on('A.id', '=', 'C.id_buku');
-            })
+            });
+        if($request->filled('query')) {
+            $data = $data->whereRaw('LOWER(A.judul) LIKE LOWER(\'%' . $request->input('query') . '%\')');
+        }
+        $data = $data->orderBy('A.created_at', 'DESC')
+            ->orderBy('jumlah', 'DESC')
             ->get();
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
+    function detailBuku(Request $request){
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+
+        $jumlah_pinjam = Peminjaman::select('id_buku', DB::raw('count(id_buku) AS jumlah_pinjam'))
+            ->where('status', '=', 1)
+            ->where('id_buku', '=', $request->input('id_buku'))
+            ->groupBy('id_buku');
+
+        $data = DB::table('buku AS A')
+            ->select(
+                'A.id',
+                'A.judul',
+                'B.nama_type',
+                DB::raw('concat("' . $url_gambar . '", A.gambar) AS gambar'),
+                DB::raw('IF(C.jumlah_pinjam IS NULL, A.jumlah, A.jumlah-C.jumlah_pinjam) AS jumlah')
+            )
+            ->join('type_buku AS B', 'A.type_buku', '=', 'B.id')
+            ->leftJoinSub($jumlah_pinjam, 'C', function ($join) {
+                $join->on('A.id', '=', 'C.id_buku');
+            })->get();
         return response()->json(array('status' => 'success', 'data' => $data));
     }
 
@@ -136,7 +165,8 @@ class ApiController extends Controller{
             ->join('buku AS B', 'B.id', '=', 'A.id_buku')
             ->where('id_user', '=', $request->header('id_user'))
             ->where('status', '=', '1')
-            ->orderBy('tgl_pesan', 'DESC')
+            ->where('A.tgl_pesan', '>', date('Y-m-d', strtotime("-" . $batas_waktu . " days")))
+            ->orderBy('A.created_at', 'DESC')
             ->get();
 
         return response()->json(array('status' => 'success', 'data' => $data));
