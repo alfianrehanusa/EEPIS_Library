@@ -24,6 +24,8 @@ Route::post('/cek_token', 'ApiController@checkToken');
 Route::group(['middleware' => ['CheckTokenApi']], function () {
     Route::post('/list_buku', 'ApiController@listBuku');
 
+    Route::post('/list_ebook', 'ApiController@listEbook');
+
     Route::post('/pesan', 'ApiController@pesan');
     Route::get('/list_pesan', 'ApiController@listPesan');
 
@@ -34,3 +36,4 @@ Route::group(['middleware' => ['CheckTokenApi']], function () {
 
 //FILE
 Route::get('/file/cover_buku/{token}/{filename}', 'ApiController@coverBuku');
+Route::get('/file/ebook/{token}/{filename}', 'ApiController@fileEbook');

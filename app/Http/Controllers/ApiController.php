@@ -108,6 +108,26 @@ class ApiController extends Controller{
         return response()->json(array('status' => 'success', 'data' => $data));
     }
 
+    function listEbook(Request $request){
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+        $url_ebook = url('/') . '/api/file/ebook/' . $request->header('token') . '/';
+
+        $data = DB::table('ebook AS A')
+            ->select(
+                'A.id',
+                'A.judul',
+                DB::raw('concat("' . $url_gambar . '", A.gambar) AS gambar'),
+                DB::raw('concat("' . $url_ebook . '", A.ebook) AS ebook')
+            );
+        if($request->filled('query')) {
+            $data = $data->whereRaw('LOWER(A.judul) LIKE LOWER(\'%' . $request->input('query') . '%\')');
+        }
+        $data = $data->orderBy('A.created_at', 'DESC')
+            ->orderBy('A.judul', 'ASC')
+            ->get();
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
     function pesan(Request $request){
         try {
             DB::beginTransaction();
@@ -224,6 +244,22 @@ class ApiController extends Controller{
             }
         } else {
             return response()->json(['status' => 'failed', 'reason' => 'Invalid image']);
+        }
+    }
+
+    function fileEbook($token, $filename){
+        //token check
+        $data = User::where('login_token', '=', $token)->first();
+        if(!$data){
+            return response()->json(['status' => 'failed', 'reason' => 'Invalid token']);
+        }
+
+        $path = storage_path('app/file_ebook/' . $filename);
+        try {
+            $response = Response::make(File::get($path), 200);
+            return $response->header("Content-Type", 'application/pdf');
+        } catch (FileNotFoundException $exception) {
+            abort(404);
         }
     }
 
