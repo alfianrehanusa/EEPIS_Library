@@ -43,9 +43,15 @@ class DashboardController extends Controller{
             ->orderBy('status', 'DESC')
             ->get();
 
-        $status_pengembalian = array(
-            $status_pengembalian[0]->status_pengembalian, $status_pengembalian[1]->status_pengembalian
-        );
+        if($status_pengembalian->isNotEmpty()){
+            $status_pengembalian = array(
+                $status_pengembalian[0]->status_pengembalian, $status_pengembalian[1]->status_pengembalian
+            );
+        }
+        else{
+            $status_pengembalian = array(0,0);
+        }
+
         return view('page.dashboard', compact('buku_dipinjam', 'jumlah_buku',
             'jumlah_ebook', 'jumlah_user', 'total_pinjam_bulan', 'status_pengembalian'));
     }
