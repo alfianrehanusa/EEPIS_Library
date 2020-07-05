@@ -23,8 +23,10 @@ Route::post('/cek_token', 'ApiController@checkToken');
 
 Route::group(['middleware' => ['CheckTokenApi']], function () {
     Route::post('/list_buku', 'ApiController@listBuku');
+    Route::post('/detail_buku', 'ApiController@detailBuku');
 
     Route::post('/list_ebook', 'ApiController@listEbook');
+    Route::post('/detail_ebook', 'ApiController@detailEbook');
 
     Route::post('/pesan', 'ApiController@pesan');
     Route::get('/list_pesan', 'ApiController@listPesan');

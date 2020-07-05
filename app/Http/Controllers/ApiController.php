@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Pengaturan;
 use App\Models\Buku;
+use App\Models\Ebook;
 use App\Models\User;
 
 use Exception;
@@ -95,16 +96,17 @@ class ApiController extends Controller{
 
         $data = DB::table('buku AS A')
             ->select(
-                'A.id',
-                'A.judul',
-                'B.nama_type',
+                'A.*',
+                'B.nama_type AS type_buku',
                 DB::raw('concat("' . $url_gambar . '", A.gambar) AS gambar'),
                 DB::raw('IF(C.jumlah_pinjam IS NULL, A.jumlah, A.jumlah-C.jumlah_pinjam) AS jumlah')
             )
             ->join('type_buku AS B', 'A.type_buku', '=', 'B.id')
             ->leftJoinSub($jumlah_pinjam, 'C', function ($join) {
                 $join->on('A.id', '=', 'C.id_buku');
-            })->get();
+            })
+            ->where('A.id', '=', $request->input('id_buku'))
+            ->first();
         return response()->json(array('status' => 'success', 'data' => $data));
     }
 
@@ -125,6 +127,20 @@ class ApiController extends Controller{
         $data = $data->orderBy('A.created_at', 'DESC')
             ->orderBy('A.judul', 'ASC')
             ->get();
+        return response()->json(array('status' => 'success', 'data' => $data));
+    }
+
+    function detailEbook(Request $request){
+        $url_gambar = url('/') . '/api/file/cover_buku/' . $request->header('token') . '/';
+        $url_ebook = url('/') . '/api/file/ebook/' . $request->header('token') . '/';
+
+        $data = Ebook::select(
+                '*',
+                DB::raw('concat("' . $url_gambar . '", gambar) AS gambar'),
+                DB::raw('concat("' . $url_ebook . '", ebook) AS ebook')
+            )
+            ->where('id', '=', $request->input('id_ebook'))
+            ->first();
         return response()->json(array('status' => 'success', 'data' => $data));
     }
 
