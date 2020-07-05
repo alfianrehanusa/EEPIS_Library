@@ -47,9 +47,9 @@
                             <td>{{$key->jumlah}}</td>
                             <td>{{$key->jumlah_dipinjam}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info" onclick="location.href='/buku/umum/detail/{{$key->id}}';"><i class="fa fa-eye mr-1"></i>Detail</button>
-                                <button type="button" class="btn btn-sm btn-warning" onclick="editBuku({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="hapusBuku({{$key->id}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
+                                <button type="button" class="btn btn-sm btn-info mb-1" onclick="location.href='/buku/umum/detail/{{$key->id}}';"><i class="fa fa-eye mr-1"></i>Detail</button><br>
+                                <button type="button" class="btn btn-sm btn-warning mb-1" onclick="editBuku({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button><br>
+                                <button type="button" class="btn btn-sm btn-danger mb-1" onclick="hapusBuku({{$key->id}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
                     @endforeach

@@ -62,8 +62,8 @@
                             </td>
                             <td>
                                 {{-- <button type="button" class="btn btn-sm btn-warning" onclick="editPinjam({{$key->id_pinjam}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button> --}}
-                                <button type="button" class="btn btn-sm btn-success" onclick="kembalikanBuku({{$key->id_pinjam}})"><i class="fa fa-book mr-1"></i>Kembalikan Buku</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="hapusPinjam({{$key->id_pinjam}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
+                                <button type="button" class="btn btn-sm btn-success mb-1" onclick="kembalikanBuku({{$key->id_pinjam}})"><i class="fa fa-book mr-1"></i>Kembalikan Buku</button><br>
+                                <button type="button" class="btn btn-sm btn-danger mb-1" onclick="hapusPinjam({{$key->id_pinjam}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
                     @endforeach
