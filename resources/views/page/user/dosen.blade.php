@@ -45,8 +45,8 @@
                             <td>{{$key->nama}}</td>
                             <td>{{$key->email}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-warning" onclick="editDosen({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="hapusDosen({{$key->id}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
+                                <button type="button" class="btn btn-sm btn-warning mb-1" onclick="editDosen({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button><br>
+                                <button type="button" class="btn btn-sm btn-danger mb-1" onclick="hapusDosen({{$key->id}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
                     @endforeach
