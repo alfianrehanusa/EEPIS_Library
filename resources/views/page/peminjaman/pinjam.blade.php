@@ -325,47 +325,70 @@
         //     });
         // }
 
-        function kembalikanBuku(id){
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "Buku akan dikembalikan!",
-                icon: 'warning',
+        async function kembalikanBuku(id){
+            const {
+                value: kondisi
+            } = await Swal.fire({
+                title: 'Kondisi Buku',
+                input: 'select',
+                confirmButtonText: '<i class="fa fa-book-open"> OK',
+                cancelButtonText: '<i class="fa fa-times"> Batal',
+                inputOptions: {
+                    'bagus': 'Bagus',
+                    'rusak_hilang': 'Rusak Atau Hilang'
+                },
                 showCancelButton: true,
-                confirmButtonColor: '#28a745',
-                confirmButtonText: '<i class="fa fa-book-open"> Ya, kembalikan buku',
-                cancelButtonText: '<i class="fa fa-times"> Batal'
-            }).then((result) => {
-                if(result.value){
-                    var formdata = new FormData();
-                    formdata.append('id', id);
-                    $.ajax({
-                        type: 'POST',
-                        dataType: 'json',
-                        url: '/peminjaman/pinjam/kembali',
-                        data: formdata,
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        success:function(data){
-                            if(data.status === 'success'){
-                                Swal.fire(
-                                    'Sukses!',
-                                    data.reason,
-                                    'success'
-                                ).then(() => {
-                                    location.reload(true);
-                                });
-                            } else {
-                                Swal.fire(
-                                    'Oops...',
-                                    data.reason,
-                                    'error'
-                                );
-                            }
-                        }
-                    });
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                        resolve();
+                    })
                 }
-            });
+            })
+
+            if (kondisi) {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Buku akan dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    confirmButtonText: '<i class="fa fa-book-open"> Ya, kembalikan buku',
+                    cancelButtonText: '<i class="fa fa-times"> Batal'
+                }).then((result) => {
+                    if(result.value){
+                        var formdata = new FormData();
+                        formdata.append('id', id);
+                        formdata.append('kondisi', kondisi);
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            url: '/peminjaman/pinjam/kembali',
+                            data: formdata,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success:function(data){
+                                if(data.status === 'success'){
+                                    Swal.fire(
+                                        'Sukses!',
+                                        data.reason,
+                                        'success'
+                                    ).then(() => {
+                                        location.reload(true);
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Oops...',
+                                        data.reason,
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
         }
 
         function hapusPinjam(id){

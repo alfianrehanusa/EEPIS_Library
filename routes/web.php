@@ -101,9 +101,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('buku/read', 'Buku\UtilController@read');
     Route::post('buku/delete', 'Buku\UtilController@delete');
     Route::post('buku/list_buku', 'Buku\UtilController@listBuku');
+    Route::get('buku/list_kategori', 'Buku\UtilController@listKategori');
 
     //UTIL USER
     Route::post('user/list_user', 'User\UtilController@list');
+    Route::get('user/list_prodi', 'User\UtilController@listProdi');
 
     //UTIL PINJAM
     Route::post('peminjaman/read', 'Peminjaman\UtilController@read');

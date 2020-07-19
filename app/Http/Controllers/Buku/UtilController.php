@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Buku;
 use App\Models\Ebook;
+use App\Models\Type_buku;
 use DB;
 use Exception;
+use PDO;
 
 class UtilController extends Controller{
 
@@ -53,4 +55,7 @@ class UtilController extends Controller{
         return response()->json($data);
     }
 
+    function listKategori(){
+        return response()->json(Type_buku::all());
+    }
 }

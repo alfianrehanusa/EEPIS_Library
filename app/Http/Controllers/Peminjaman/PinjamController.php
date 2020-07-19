@@ -9,8 +9,10 @@ use App\Models\Peminjaman;
 use App\Models\Pengaturan;
 use App\Models\Buku;
 use App\Models\Type_buku;
+use App\Models\User;
 use DB;
 use Exception;
+use DateTime;
 
 class PinjamController extends Controller{
 
@@ -46,6 +48,29 @@ class PinjamController extends Controller{
             $add->status = 3;
             $add->save();
 
+            //cek borrow_date
+            $user = User::find($request->input('id_user'));
+            $date1 = date_create($user->borrow_date);
+            $date2 = date_create(date('Y-m-d'));
+            $diff = date_diff($date1, $date2)->format("%R");
+
+            $date = new DateTime($user->borrow_date);
+            $date = $date->format('Y-m-d');
+
+            if($diff == '-'){
+                return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan, dapat meminjam buku kembali tanggal ' . $date));
+            }
+
+            //batas buku
+            $batas_buku = Pengaturan::where('id', '=', '3')->first();
+            $batas_buku = $batas_buku->nilai;
+            $jumlah_pinjam = Peminjaman::where('id_user', '=', $request->input('id_user'))
+                ->where('status', '=', '3')
+                ->count();
+            if($jumlah_pinjam >= $batas_buku){
+                return response()->json(array('status' => 'failed', 'reason' => 'Batas jumlah peminjaman telah tercapai!'));
+            }
+
             //pengurangan jumlah buku
             $data = Buku::where('id', '=', $request->input('id_buku'))
                 ->where('jumlah', '>', 0)->first();
@@ -71,11 +96,14 @@ class PinjamController extends Controller{
             $batas_waktu = $batas_waktu->nilai;
 
             $data = Peminjaman::find($request->input('id'));
+            $id_user = $data->id_user;
 
-            //increment stok buku;
-            $increment = Buku::find($data->id_buku);
-            $increment->jumlah = $increment->jumlah + 1;
-            $increment->save();
+            //increment stok buku jika kondisi buku bagus
+            if($request->input('kondisi') == 'bagus'){
+                $increment = Buku::find($data->id_buku);
+                $increment->jumlah = $increment->jumlah + 1;
+                $increment->save();
+            }
 
             //cek telat atau tidak
             $date1 = date_create($data->tgl_pinjam);
@@ -87,6 +115,17 @@ class PinjamController extends Controller{
                 $data->tgl_kembali = date('Y-m-d');
                 $data->status = '4';
                 $data->save();
+
+                //hukuman terlambat
+                $jumlah_hari = Pengaturan::where('id', '=', '4')->first();
+                $jumlah_hari = $jumlah_hari->nilai;
+                $jumlah_hari = $diff * $jumlah_hari;
+
+                $date = date("Y-m-d", strtotime("+ " . $jumlah_hari . " day"));
+
+                $user = User::find($id_user);
+                $user->borrow_date = $date;
+                $user->save();
             }
             //jika tepat waktu
             else{

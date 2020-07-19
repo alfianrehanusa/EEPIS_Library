@@ -14,6 +14,7 @@ use Exception;
 use DB;
 use Response;
 use File;
+use DateTime;
 
 class ApiController extends Controller{
 
@@ -155,6 +156,19 @@ class ApiController extends Controller{
                 return response()->json(array('status' => 'failed', 'reason' => 'Data tidak ditemukan!'));
             }
 
+            //cek borrow_date
+            $user = User::find($request->header('id_user'));
+            $date1 = date_create($user->borrow_date);
+            $date2 = date_create(date('Y-m-d'));
+            $diff = date_diff($date1, $date2)->format("%R");
+
+            $date = new DateTime($user->borrow_date);
+            $date = $date->format('Y-m-d');
+
+            if($diff == '-'){
+                return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan, dapat memesan buku kembali tanggal ' . $date));
+            }
+
             //Pengecekan stok buku
             $buku_pesan = Peminjaman::where('id_buku', '=', $request->input('id_buku'))
                 ->where('status', '=', 1)
@@ -162,6 +176,16 @@ class ApiController extends Controller{
             $stok_buku = $data->jumlah - $buku_pesan;
             if($stok_buku < 1){
                 return response()->json(array('status' => 'failed', 'reason' => 'Stok buku habis!'));
+            }
+
+            //batas buku
+            $batas_buku = Pengaturan::where('id', '=', '3')->first();
+            $batas_buku = $batas_buku->nilai;
+            $jumlah_pinjam = Peminjaman::where('id_user', '=', $request->header('id_user'))
+                ->where('status', '=', '3')
+                ->count();
+            if($jumlah_pinjam >= $batas_buku){
+                return response()->json(array('status' => 'failed', 'reason' => 'Batas jumlah peminjaman telah tercapai!'));
             }
 
             $data = new Peminjaman;

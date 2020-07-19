@@ -9,8 +9,10 @@ use App\Models\Peminjaman;
 use App\Models\Pengaturan;
 use App\Models\Buku;
 use App\Models\Type_buku;
+use App\Models\User;
 use DB;
 use Exception;
+use DateTime;
 
 class PesanController extends Controller{
 
@@ -33,6 +35,29 @@ class PesanController extends Controller{
     function add(Request $request){
         try {
             DB::beginTransaction();
+
+            //cek borrow_date
+            $user = User::find($request->input('id_user'));
+            $date1 = date_create($user->borrow_date);
+            $date2 = date_create(date('Y-m-d'));
+            $diff = date_diff($date1, $date2)->format("%R");
+
+            $date = new DateTime($user->borrow_date);
+            $date = $date->format('Y-m-d');
+
+            if($diff == '-'){
+                return response()->json(array('status' => 'failed', 'reason' => 'Kesalahan, dapat memesan buku kembali tanggal ' . $date));
+            }
+
+            //batas buku
+            $batas_buku = Pengaturan::where('id', '=', '3')->first();
+            $batas_buku = $batas_buku->nilai;
+            $jumlah_pinjam = Peminjaman::where('id_user', '=', $request->input('id_user'))
+                ->where('status', '=', '3')
+                ->count();
+            if($jumlah_pinjam >= $batas_buku){
+                return response()->json(array('status' => 'failed', 'reason' => 'Batas jumlah peminjaman telah tercapai!'));
+            }
 
             //Pengecekan stok buku
             $data = Buku::find($request->input('id_buku'));
@@ -69,6 +94,17 @@ class PesanController extends Controller{
             $data->tgl_pinjam = date('Y-m-d');
             $data->status = '3';
             $data->save();
+
+            //batas buku
+            $data = Peminjaman::find($request->input('id'));
+            $batas_buku = Pengaturan::where('id', '=', '3')->first();
+            $batas_buku = $batas_buku->nilai;
+            $jumlah_pinjam = Peminjaman::where('id_user', '=', $request->id_user)
+                ->where('status', '=', '3')
+                ->count();
+            if($jumlah_pinjam >= $batas_buku){
+                return response()->json(array('status' => 'failed', 'reason' => 'Batas jumlah peminjaman telah tercapai!'));
+            }
 
             //pengurangan jumlah buku
             $data = Buku::where('id', '=', $id_buku)

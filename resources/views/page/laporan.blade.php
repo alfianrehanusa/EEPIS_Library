@@ -24,6 +24,25 @@
 
 <div class="content ml-3 mr-3">
     <div class="container-fluid p-3 shadow-sm mb-5 bg-white rounded">
+
+        <form class="form-inline" method="GET" action="/laporan">
+            <label for="email" class="mr-sm-2">Filter:</label>
+            <select id="name" class="form-control mb-2 mr-sm-2" name="name" onchange="selectFilter(this)" required>
+                <option value selected hidden>Pilih Filter</option>
+                <option value="kategori_buku">Kategori Buku</option>
+                <option value="prodi">Program Studi</option>
+            </select>
+            <select id="value" class="form-control mb-2 mr-sm-2" name="value" style="display: none" required>
+                <option value selected hidden>Pilih</option>
+            </select>
+            <select id="filter" class="form-control mb-2 mr-sm-2" name="filter" required>
+                <option value="all">Semua</option>
+                <option value="4">Tepat Waktu</option>
+                <option value="5">Telat</option>
+            </select>
+            <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search mr-1"></i>Cari</button>
+        </form>
+
         <div class="table-responsive">
             <table id="dt_laporan" class="table table-hover">
                 <thead class="thead-light">
@@ -68,5 +87,34 @@
                 "order": []
             });
         });
+
+        function selectFilter(item){
+            item = item.options[item.selectedIndex].value;
+            url = '';
+            if(item == 'kategori_buku'){
+                url = '/buku/list_kategori';
+            }
+            else if(item == 'prodi'){
+                url = '/user/list_prodi';
+            }
+
+            var formdata = new FormData();
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success:function(data){
+                    $('#value').empty();
+                    data.forEach(key => {
+                        if(item == 'kategori_buku'){
+                            $("#value").append($("<option />").val(key.id).text(key.nama_type));
+                        }
+                        else if(item == 'prodi'){
+                            $("#value").append($("<option />").val(key.id).text(key.nama_prodi));
+                        }
+                    });
+                    $('#value').show();
+                }
+            });
+        }
     </script>
 @endpush

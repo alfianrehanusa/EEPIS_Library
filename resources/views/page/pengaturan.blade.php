@@ -29,7 +29,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>Nama Pengaturan</th>
-                        <th>Jumlah Hari</th>
+                        <th>Nilai</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -37,7 +37,7 @@
                     @foreach ($data as $key)
                         <tr>
                             <td>{{$key->nama}}</td>
-                            <td>{{$key->nilai}} hari</td>
+                            <td>{{$key->nilai}} {{$key->unit}}</td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-warning" onclick="editPengaturan({{$key->id}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button>
                             </td>
@@ -67,7 +67,7 @@
             }).find(".modal-dialog").addClass("modal-dialog-centered");
             $.post("/pengaturan/read", {id: id}, function(data, status){
                 var message = '<form id="edit_pengaturan"><input type="hidden" name="id" value="' + data.id + '">';
-                message += '<div class="form-group"><label for="edit_nilai" class="font-weight-normal">Jumlah Hari :</label><input type="number" min="1" class="form-control" placeholder="Jumlah Hari" id="edit_nilai" name="edit_nilai" autocomplete="off" value="' + data.nilai + '" required></div>';
+                message += '<div class="form-group"><label for="edit_nilai" class="font-weight-normal">Nilai :</label><input type="number" min="1" class="form-control" placeholder="Jumlah Hari" id="edit_nilai" name="edit_nilai" autocomplete="off" value="' + data.nilai + '" required></div>';
                 message += '<div class="text-right"><button id="ubah_pengaturan_btn_loading" class="btn btn-success disabled" style="display: none;">Loading...</button><button id="ubah_pengaturan_btn_submit" type="submit" class="btn btn-success"><i class="far fa-floppy-o mr-1"></i>Simpan</button></div></form>'
                 dialog.init(function(){
                     dialog.find('.bootbox-body').html(message);
