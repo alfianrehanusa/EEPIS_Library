@@ -37,8 +37,8 @@
             </select>
             <select id="filter" class="form-control mb-2 mr-sm-2" name="filter" required>
                 <option value="all">Semua</option>
-                <option value="4">Tepat Waktu</option>
-                <option value="5">Telat</option>
+                <option value="5">Tepat Waktu</option>
+                <option value="4">Telat</option>
             </select>
             <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search mr-1"></i>Cari</button>
         </form>
