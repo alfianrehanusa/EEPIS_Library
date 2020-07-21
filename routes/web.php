@@ -86,6 +86,9 @@ Route::group(['middleware' => ['auth']], function () {
     //Laporan
     Route::get('laporan', 'LaporanController@index');
 
+    //Laporan Denda
+    Route::get('laporan_denda', 'LaporanDendaController@index');
+
     //Pengaturan
     Route::get('pengaturan', 'PengaturanController@index');
     Route::post('pengaturan/read', 'PengaturanController@read');

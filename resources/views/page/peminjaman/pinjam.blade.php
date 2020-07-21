@@ -326,7 +326,7 @@
         //     });
         // }
 
-        async function kembalikanBuku(id, harga, deadline){
+        async function kembalikanBuku(id_pinjam, harga, deadline){
             const {
                 value: kondisi
             } = await Swal.fire({
@@ -356,17 +356,17 @@
                     cancelButtonText: '<i class="fa fa-times"> Batal'
                 }).then((result) => {
                     if(result.value){
-                        cekKeterlambatan(deadline);
+                        cekKeterlambatan(id_pinjam, kondisi, deadline);
                     }
                 });
             }
             else{
-                cekKeterlambatan(deadline);
+                cekKeterlambatan(id_pinjam, kondisi, deadline);
             }
 
         }
 
-        function cekKeterlambatan(deadline){
+        function cekKeterlambatan(id_pinjam, kondisi, deadline){
 
             var date_deadline = new Date(deadline);
             var date_now = new Date();
@@ -374,26 +374,27 @@
             var timeDiff = Math.abs(date_deadline.getTime() - date_now.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
+            var denda_terlambat = ({{$denda}} * (diffDays-1));
             if(date_deadline < date_now){
                 Swal.fire({
                     title: 'Terlambat mengembalikan buku',
-                    text: "Denda sebesar Rp " + ({{$denda}} * (diffDays-1)),
+                    text: "Denda sebesar Rp " + denda_terlambat,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: '<i class="fa fa-book-open"> OK',
                     cancelButtonText: '<i class="fa fa-times"> Batal'
                 }).then((result) => {
                     if(result.value){
-                        konfirmasiPengembalian();
+                        konfirmasiPengembalian(id_pinjam, kondisi, denda_terlambat);
                     }
                 });
             }
             else{
-                konfirmasiPengembalian();
+                konfirmasiPengembalian(id_pinjam, kondisi, 0);
             }
         }
     
-        function konfirmasiPengembalian(){
+        function konfirmasiPengembalian(id_pinjam, kondisi, denda_terlambat){
             Swal.fire({
                 title: 'Apakah anda yakin?',
                 text: "Buku akan dikembalikan!",
@@ -405,8 +406,9 @@
             }).then((result) => {
                 if(result.value){
                     var formdata = new FormData();
-                    formdata.append('id', id);
+                    formdata.append('id', id_pinjam);
                     formdata.append('kondisi', kondisi);
+                    formdata.append('denda_terlambat', denda_terlambat);
                     $.ajax({
                         type: 'POST',
                         dataType: 'json',

@@ -122,6 +122,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/laporan_denda" class="nav-link {{ (request()->is('laporan_denda')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Laporan Denda</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="/pengaturan" class="nav-link {{ (request()->is('pengaturan')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Pengaturan</p>

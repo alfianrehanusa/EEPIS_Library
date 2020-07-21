@@ -10,6 +10,7 @@ use App\Models\Pengaturan;
 use App\Models\Buku;
 use App\Models\Type_buku;
 use App\Models\User;
+use App\Models\Denda_report;
 use DB;
 use Exception;
 use DateTime;
@@ -101,10 +102,22 @@ class PinjamController extends Controller{
             $data = Peminjaman::find($request->input('id'));
             $id_user = $data->id_user;
 
+            $buku = Buku::find($data->id_buku);
+            $harga_buku = $buku->harga;
+
             //increment stok buku jika kondisi buku bagus
             if($request->input('kondisi') == 'bagus'){
-                $increment = Buku::find($data->id_buku);
-                $increment->jumlah = $increment->jumlah + 1;
+                $buku->jumlah = $buku->jumlah + 1;
+                $buku->save();
+            }
+            //isi laporan denda
+            else{
+                $increment = new Denda_report;
+                $increment->id_user = $id_user;
+                $increment->id_buku = $data->id_buku;
+                $increment->nominal = $harga_buku;
+                $increment->tanggal = date('Y-m-d');
+                $increment->type_denda = 2;
                 $increment->save();
             }
 
@@ -129,6 +142,15 @@ class PinjamController extends Controller{
                 $user = User::find($id_user);
                 $user->borrow_date = $date;
                 $user->save();
+
+                //isi laporan denda
+                $increment = new Denda_report;
+                $increment->id_user = $id_user;
+                $increment->id_buku = $data->id_buku;
+                $increment->nominal = $request->input('denda_terlambat');
+                $increment->tanggal = date('Y-m-d');
+                $increment->type_denda = 1;
+                $increment->save();
             }
             //jika tepat waktu
             else{
