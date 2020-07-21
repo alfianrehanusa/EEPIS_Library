@@ -29,7 +29,10 @@ class PinjamController extends Controller{
         ->orderBy('A.tgl_pesan', 'DESC')
         ->get();
 
-        return view('page.peminjaman.pinjam', compact('data', 'batas_waktu', 'list_type_buku'));
+        $denda = Pengaturan::where('id', '=', '5')->first();
+        $denda = $denda->nilai;
+
+        return view('page.peminjaman.pinjam', compact('data', 'batas_waktu', 'list_type_buku', 'denda'));
     }
 
     function read(Request $request){

@@ -48,6 +48,7 @@
                             <td>@php
                                 $diff = date("Y-m-d", strtotime('+' . $batas_waktu . " days", strtotime($key->tgl_pinjam)));
                                 echo $diff;
+                                $deadline = date("Y-m-d", strtotime($diff));
                                 $diff = date_diff(date_create($diff), date_create(date("Y-m-d")));
                                 @endphp
                                 @if($diff->format("%R") == '+')
@@ -62,7 +63,7 @@
                             </td>
                             <td>
                                 {{-- <button type="button" class="btn btn-sm btn-warning" onclick="editPinjam({{$key->id_pinjam}})"><i class="fa fa-user-edit mr-1"></i>Ubah</button> --}}
-                                <button type="button" class="btn btn-sm btn-success mb-1" onclick="kembalikanBuku({{$key->id_pinjam}})"><i class="fa fa-book mr-1"></i>Kembalikan Buku</button><br>
+                                <button type="button" class="btn btn-sm btn-success mb-1" onclick="kembalikanBuku({{$key->id_pinjam}}, {{$key->harga}}, '{{$deadline}}')"><i class="fa fa-book mr-1"></i>Kembalikan Buku</button><br>
                                 <button type="button" class="btn btn-sm btn-danger mb-1" onclick="hapusPinjam({{$key->id_pinjam}})"><i class="fa fa-trash mr-1"></i>Hapus</button>
                             </td>
                         </tr>
@@ -325,7 +326,7 @@
         //     });
         // }
 
-        async function kembalikanBuku(id){
+        async function kembalikanBuku(id, harga, deadline){
             const {
                 value: kondisi
             } = await Swal.fire({
@@ -345,50 +346,95 @@
                 }
             })
 
-            if (kondisi) {
+            if (kondisi == "rusak_hilang") {
                 Swal.fire({
-                    title: 'Apakah anda yakin?',
-                    text: "Buku akan dikembalikan!",
+                    title: 'Buku dalam keadaan rusak/hilang',
+                    text: "Denda sebesar Rp " + harga,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#28a745',
-                    confirmButtonText: '<i class="fa fa-book-open"> Ya, kembalikan buku',
+                    confirmButtonText: '<i class="fa fa-book-open"> OK',
                     cancelButtonText: '<i class="fa fa-times"> Batal'
                 }).then((result) => {
                     if(result.value){
-                        var formdata = new FormData();
-                        formdata.append('id', id);
-                        formdata.append('kondisi', kondisi);
-                        $.ajax({
-                            type: 'POST',
-                            dataType: 'json',
-                            url: '/peminjaman/pinjam/kembali',
-                            data: formdata,
-                            contentType: false,
-                            cache: false,
-                            processData: false,
-                            success:function(data){
-                                if(data.status === 'success'){
-                                    Swal.fire(
-                                        'Sukses!',
-                                        data.reason,
-                                        'success'
-                                    ).then(() => {
-                                        location.reload(true);
-                                    });
-                                } else {
-                                    Swal.fire(
-                                        'Oops...',
-                                        data.reason,
-                                        'error'
-                                    );
-                                }
-                            }
-                        });
+                        cekKeterlambatan(deadline);
                     }
                 });
             }
+            else{
+                cekKeterlambatan(deadline);
+            }
 
+        }
+
+        function cekKeterlambatan(deadline){
+
+            var date_deadline = new Date(deadline);
+            var date_now = new Date();
+
+            var timeDiff = Math.abs(date_deadline.getTime() - date_now.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            if(date_deadline < date_now){
+                Swal.fire({
+                    title: 'Terlambat mengembalikan buku',
+                    text: "Denda sebesar Rp " + ({{$denda}} * (diffDays-1)),
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fa fa-book-open"> OK',
+                    cancelButtonText: '<i class="fa fa-times"> Batal'
+                }).then((result) => {
+                    if(result.value){
+                        konfirmasiPengembalian();
+                    }
+                });
+            }
+            else{
+                konfirmasiPengembalian();
+            }
+        }
+    
+        function konfirmasiPengembalian(){
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Buku akan dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                confirmButtonText: '<i class="fa fa-book-open"> Ya, kembalikan buku',
+                cancelButtonText: '<i class="fa fa-times"> Batal'
+            }).then((result) => {
+                if(result.value){
+                    var formdata = new FormData();
+                    formdata.append('id', id);
+                    formdata.append('kondisi', kondisi);
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/peminjaman/pinjam/kembali',
+                        data: formdata,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success:function(data){
+                            if(data.status === 'success'){
+                                Swal.fire(
+                                    'Sukses!',
+                                    data.reason,
+                                    'success'
+                                ).then(() => {
+                                    location.reload(true);
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Oops...',
+                                    data.reason,
+                                    'error'
+                                );
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         function hapusPinjam(id){

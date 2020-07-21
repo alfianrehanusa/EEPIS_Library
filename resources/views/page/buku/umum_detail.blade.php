@@ -74,6 +74,17 @@
                 </div>
                 <div class="row row-no-gutters">
                     <div class="col-3">
+                        <h6 class="font-weight-bold">Harga</h6>
+                    </div>
+                    <div class="col-1 text-right pl-0 pr-0">
+                        <h6>:</h6>
+                    </div>
+                    <div class="col">
+                        <h6>Rp {{$data->harga}}</h6>
+                    </div>
+                </div>
+                <div class="row row-no-gutters">
+                    <div class="col-3">
                         <h6 class="font-weight-bold">Jumlah/Stok Buku</h6>
                     </div>
                     <div class="col-1 text-right pl-0 pr-0">
